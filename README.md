@@ -1,8 +1,63 @@
-# React + Vite
+# Dicoding Redux Forum App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A forum application built with React and Redux.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Built with React 18 and Redux Toolkit
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js (LTS version recommended)
+- npm or yarn package manager
+
+## 🛠️ Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/habibalmaula/redux-forum-app.git
+cd redux-forum-app
+```
+
+2. Install dependencies:
+```bash
+pnpm install
+# or
+yarn install
+```
+
+## 🖥️ Development
+
+To start the development server:
+```bash
+pnpm dev
+# or
+yarn dev
+```
+
+The application will be available at `http://localhost:5173` by default.
+
+
+## 🛠️ Tech Stack
+
+- **Frontend Framework:** React 18
+- **State Management:** Redux Toolkit
+- **UI Components:** 
+  - Radix UI for accessible components
+  - Lucide React for icons
+- **Styling:** 
+  - Tailwind CSS
+  - Class Variance Authority
+  - tailwind-merge for efficient class merging
+- **Development Tools:**
+  - Vite for fast development and building
+  - ESLint for code quality
+  - PostCSS and Autoprefixer
+
+
+If you have any questions or feedback, please open an issue in the GitHub repository.
+
+---
+
+Made with ❤️ by Wong Pekalongan
