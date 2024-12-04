@@ -22,15 +22,16 @@ export const unsetAuthUserActionCreator = () => {
   };
 };
 
-export const asyncSetAuthUser = ({ id, password }) => {
+export const asyncSetAuthUser = ({ email, password }) => {
   return async (dispatch) => {
     dispatch(showLoading());
     try {
-      const token = await api.login({ id, password });
+      const token = await api.login({ email, password });
       api.putAccessToken(token);
       const authUser = await api.getOwnProfile();
       dispatch(setAuthUserActionCreator(authUser));
     } catch (error) {
+      console.log(`error_message: ${error.message} || stack: ${error.stack}`);
       alert(error.message);
     }
     dispatch(hideLoading());

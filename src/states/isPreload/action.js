@@ -1,4 +1,3 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../utils/api";
 import { setAuthUserActionCreator } from "../authUser/action";
 import { hideLoading, showLoading } from "react-redux-loading-bar";
@@ -25,7 +24,7 @@ function asyncPreloadProcess() {
       dispatch(setInitialDarkMode());
       const authUser = await api.getOwnProfile();
       dispatch(setAuthUserActionCreator(authUser));
-    } catch (error) {
+    } catch {
       // fallback process
       dispatch(setAuthUserActionCreator(null));
     } finally {

@@ -4,12 +4,11 @@ const api = (() => {
   const getAccessToken = () => localStorage.getItem("token");
   const putAccessToken = (token) => localStorage.setItem("token", token);
 
-  const _fetchWithAuth = async (url, option) => {
-    console.log("fetchWithAuth");
+  const _fetchWithAuth = async (url, options = {}) => {
     return fetch(`${BASE_URL}${url}`, {
-      ...option,
+      ...options,
       headers: {
-        ...option.headers,
+        ...options.headers,
         Authorization: `Bearer ${getAccessToken()}`,
       },
     });
@@ -35,14 +34,35 @@ const api = (() => {
       data: { token },
     } = responseJson;
 
+    console.log(`token: ${token}`);
+
     return token;
   };
 
-  async function getOwnProfile() {
-    console.log("getOwnProfile");
-    const response = await _fetchWithAuth(`${BASE_URL}/users/me`);
-    console.log("response", response);
+  const register = async ({ name, email, password }) => {
+    const response = await fetch(`${BASE_URL}/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
 
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== "success") {
+      throw new Error(message);
+    }
+
+    const {
+      data: { user },
+    } = responseJson;
+
+    return user;
+  };
+  async function getOwnProfile() {
+    const response = await _fetchWithAuth(`/users/me`);
     const responseJson = await response.json();
 
     const { status, message } = responseJson;
@@ -55,14 +75,44 @@ const api = (() => {
       data: { user },
     } = responseJson;
 
+    console.log(`user: ${user}`);
     return user;
+  }
+
+  async function getThreads() {
+    const response = await fetch(`${BASE_URL}/threads`);
+    const responseJson = await response.json();
+    if (responseJson.status !== "success") {
+      throw new Error(responseJson.message);
+    }
+    const {
+      data: { threads },
+    } = responseJson;
+
+    return threads;
+  }
+
+  async function getUsers() {
+    const response = await fetch(`${BASE_URL}/users`);
+    const responseJson = await response.json();
+    if (responseJson.status !== "success") {
+      throw new Error(responseJson.message);
+    }
+    const {
+      data: { users },
+    } = responseJson;
+
+    return users;
   }
 
   return {
     getAccessToken,
     putAccessToken,
     login,
+    register,
     getOwnProfile,
+    getThreads,
+    getUsers,
   };
 })();
 

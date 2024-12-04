@@ -30,7 +30,6 @@ export const setInitialDarkMode = () => {
 
 export const setDarkMode = (theme) => {
   const usedTheme = theme === "dark" ? "light" : "dark";
-  console.log(`usedTheme: ${usedTheme}`);
   rawSetTheme(usedTheme);
   return {
     type: ActionType.SET_DARK_MODE,
@@ -41,7 +40,6 @@ export const setDarkMode = (theme) => {
 };
 
 const rawSetTheme = (rawTheme) => {
-  console.log(`rawTheme: ${rawTheme}`);
   const root = window.document.documentElement;
   const isDark = rawTheme === "dark";
 
