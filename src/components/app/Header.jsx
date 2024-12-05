@@ -73,8 +73,8 @@ const Header = () => {
 
   const UserMenu = () => (
     <AlertDialog>
-      <Menubar>
-        <MenubarMenu>
+      <Menubar className="bg-transparent border-none shadow-none">
+        <MenubarMenu className="bg-blue-700">
           <MenubarTrigger className="rounded-full">
             <img
               src={authUser.authUser.avatar}
