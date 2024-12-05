@@ -1,7 +1,6 @@
 import api from "../../utils/api";
-import { setAuthUserActionCreator } from "../authUser/action";
-import { hideLoading, showLoading } from "react-redux-loading-bar";
-import { setInitialDarkMode } from "../appTheme/action";
+import { asyncLogoutUser, asyncSetUserLogin, postLoginFailureActionCreator, postLoginSuccessActionCreator } from "../authUser/action";
+import { asyncSetDarkTheme, getInitialTheme, setDarkThemeActionCreator } from "../appTheme/action";
 
 const ActionType = {
   SET_IS_PRELOAD: "SET_IS_PRELOAD",
@@ -18,20 +17,20 @@ function setIsPreloadActionCreator(isPreload) {
 
 function asyncPreloadProcess() {
   return async (dispatch) => {
-    dispatch(showLoading());
     try {
       // preload process
-      dispatch(setInitialDarkMode());
+      dispatch(setIsPreloadActionCreator(true));
+      dispatch(asyncSetDarkTheme());
       const authUser = await api.getOwnProfile();
-      dispatch(setAuthUserActionCreator(authUser));
-    } catch {
-      // fallback process
-      dispatch(setAuthUserActionCreator(null));
+      dispatch(asyncSetUserLogin(authUser));
+    } catch (error) {
+      console.error(error);
+      if (error.response && error.response.status === 401) {
+        dispatch(asyncLogoutUser());
+      }
     } finally {
-      // end preload process
       dispatch(setIsPreloadActionCreator(false));
     }
-    dispatch(hideLoading());
   };
 }
 

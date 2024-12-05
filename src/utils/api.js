@@ -34,7 +34,6 @@ const api = (() => {
       data: { token },
     } = responseJson;
 
-    console.log(`token: ${token}`);
 
     return token;
   };
@@ -75,7 +74,6 @@ const api = (() => {
       data: { user },
     } = responseJson;
 
-    console.log(`user: ${user}`);
     return user;
   }
 

@@ -3,7 +3,7 @@ import { Moon, Sun, Search, LogOut, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setDarkMode } from "@/states/appTheme/action";
+import { asyncSetDarkTheme } from "@/states/appTheme/action";
 import { useNavigate } from "react-router";
 import { login } from "@/routes/routeName";
 import {
@@ -13,7 +13,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { asyncUnsetAuthUser } from "@/states/authUser/action";
+import { asyncLogoutUser } from "@/states/authUser/action";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,12 +31,14 @@ const Header = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const { authUser, appTheme } = useSelector((state) => state);
 
+  const authUser = useSelector((state) => state.authUser);
+  const appTheme = useSelector((state) => state.appTheme);
+  
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
-      dispatch(asyncUnsetAuthUser());
+      dispatch(asyncLogoutUser());
     } finally {
       setIsLoggingOut(false);
     }
@@ -61,7 +63,7 @@ const Header = () => {
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => dispatch(setDarkMode(appTheme))}
+      onClick={() => dispatch(asyncSetDarkTheme(appTheme))}
       className="rounded-full"
       aria-label={`Switch to ${appTheme === "dark" ? "light" : "dark"} mode`}
     >
@@ -75,7 +77,7 @@ const Header = () => {
         <MenubarMenu>
           <MenubarTrigger className="rounded-full">
             <img
-              src={authUser?.avatar}
+              src={authUser.authUser.avatar}
               alt="Profile"
               className="w-8 h-8 rounded-full ring-2 ring-purple-500 cursor-pointer"
             />
@@ -130,9 +132,9 @@ const Header = () => {
         <div className="flex items-center gap-4">
           <ThemeToggle />
 
-          {authUser ? (
+          {authUser.authUser ? (
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">{authUser.name}</span>
+              <span className="text-sm font-medium">{authUser.authUser.name}</span>
               <UserMenu />
             </div>
           ) : (

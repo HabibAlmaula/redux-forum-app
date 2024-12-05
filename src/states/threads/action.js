@@ -1,17 +1,34 @@
 import api from "@/utils/api";
 
 export const ActionType = {
-  RECEIVE_THREADS: "RECEIVE_THREADS",
+  FETCH_THREADS_REQUEST: "FETCH_THREADS_REQUEST",
+  FETCH_THREADS_SUCCESS: "FETCH_THREADS_SUCCESS",
+  FETCH_THREADS_FAILURE: "FETCH_THREADS_FAILURE",
   ADD_THREAD: "ADD_THREAD",
   THUMB_UP: "THUMB_UP_THREAD",
   THUMB_DOWN: "THUMB_DOWN_THREAD",
 };
 
-export const receiveThreadsActionCreator = (threads) => {
+export const fetchThreadsRequestActionCreator = () => {
   return {
-    type: ActionType.RECEIVE_THREADS,
+    type: ActionType.FETCH_THREADS_REQUEST,
+  };
+};
+
+export const fetchThreadsSuccessActionCreator = (threads) => {
+  return {
+    type: ActionType.FETCH_THREADS_SUCCESS,
     payload: {
       threads,
+    },
+  };
+}
+
+export const fetchThreadsFailureActionCreator = (error) => {
+  return {
+    type: ActionType.FETCH_THREADS_FAILURE,
+    payload: {
+      error,
     },
   };
 };
@@ -40,16 +57,5 @@ export const thumbDownActionCreator = (threadId) => {
     payload: {
       threadId,
     },
-  };
-};
-
-export const asyncGetThreads = () => {
-  return async (dispatch) => {
-    try {
-      const threads = await api.getThreads();
-      dispatch(receiveThreadsActionCreator(threads));
-    } catch (error) {
-      alert(error.message);
-    }
   };
 };

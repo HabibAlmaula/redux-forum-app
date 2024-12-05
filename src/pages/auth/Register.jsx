@@ -2,25 +2,39 @@ import DicodingLogo from "../../assets/img/dicoding_logo.png";
 import RegisterInput from "@/components/app/RegisterInput";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { asyncUserRegister } from "@/states/users/action";
+import { asyncUserRegister } from "@/states/authUser/action";
+import { requestState } from "@/utils/requestState";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { login } from "@/routes/routeName";
 
 const Register = () => {
-  const { loadingBar } = useSelector((state) => state);
+  const loadingState = useSelector((state) => state.authUser.requestState);
+  const error = useSelector((state) => state.authUser.error);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
   const handleRegister = ({ email, password, name }) => {
     dispatch(asyncUserRegister({ email, password, name }));
   };
 
+  useEffect(() => {
+    if (loadingState == requestState.success) {
+      navigate(login);
+    }
+  }, []);
+
   return (
-    <div className="flex w-full h-screen bg-gradient-to-br from-purple-600 via-purple-500 to-blue-500">
+    <div className="flex w-full h-screen">
       {/* Left side with logo */}
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8">
+      <div className="hidden lg:flex lg:w-2/3 items-center justify-center p-8 bg-gradient-to-br from-purple-600 via-purple-500 to-blue-500">
         <div className="text-white text-center">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 shadow-2xl">
             <img
               src={DicodingLogo}
               alt="Dicoding Forum"
-              className="w-32 h-32 mx-auto mb-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 object-contain"
+              className="w-32 h-32 mx-auto mb-6 rounded-lg  transform hover:scale-105 transition-transform duration-300 object-contain"
             />
             <h2 className="text-3xl font-bold mb-4">Join Our Community!</h2>
             <p className="text-lg text-white/80">
@@ -31,7 +45,7 @@ const Register = () => {
       </div>
 
       {/* Right side with form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 md:p-8">
+      <div className="w-full lg:w-1/3 flex items-center justify-center p-4 md:p-8">
         <div className="w-full max-w-md">
           <div className="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-2xl">
             <div className="mb-8 text-center">
@@ -51,7 +65,7 @@ const Register = () => {
 
             <RegisterInput
               handleSubmit={handleRegister}
-              isLoading={loadingBar.default !== 0}
+              isLoading={loadingState === requestState.loading}
             />
           </div>
         </div>

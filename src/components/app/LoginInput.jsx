@@ -3,14 +3,29 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import LoadingSpinner from "./LoadingSpinner";
 import PropTypes from "prop-types";
 import { useInput } from "@/hooks/useInput";
+import { useNavigate } from "react-router";
+import { register } from "@/routes/routeName";
+import { useCallback } from "react";
 
 const LoginInput = ({ onSubmit, isLoading = false }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, onEmailChange] = useInput("");
   const [password, onPasswordChange] = useInput("");
 
+  const navigate = useNavigate();
+
+  const handleNavigateToRegister = useCallback(() => {
+    navigate(register);
+  }, [navigate]);
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ email, password });
+  }
+
   return (
-    <form className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
         <div className="relative">
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -20,7 +35,7 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
             <input
               type="email"
               value={email}
-              className="w-full px-4 py-3 pl-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-4 py-3 pl-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-black"
               placeholder="Enter your email"
               onChange={onEmailChange}
               required
@@ -37,7 +52,7 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full px-4 py-3 pl-12 pr-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-4 py-3 pl-12 pr-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-black"
               placeholder="Enter your password"
               value={password}
               onChange={onPasswordChange}
@@ -60,7 +75,7 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
         </div>
       </div>
       <button
-        type="button"
+        type="submit"
         onClick={() => onSubmit({ email, password })}
         disabled={isLoading}
         className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
@@ -79,7 +94,7 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
         Don&apos;t have an account?{" "}
         <span
           className="text-purple-600 hover:text-purple-700 font-medium cursor-pointer"
-        //   onClick={navigate(register)}
+          onClick={handleNavigateToRegister}
         >
           Sign up
         </span>

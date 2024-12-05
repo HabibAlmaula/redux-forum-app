@@ -3,22 +3,22 @@ import { hideLoading } from "react-redux-loading-bar";
 import { showLoading } from "react-redux-loading-bar";
 
 export const ActionType = {
-  RECEIVE_USERS: "RECEIVE_USERS",
+  FETCH_USER_REQUEST: "FETCH_USER_REQUEST",
+  FETCH_USER_SUCCESS: "FETCH_USER_SUCCESS",
+  FETCH_USER_FAILURE: "FETCH_USER_FAILURE",
+  
 };
 
-export const receiveUsersActionCreator = (users) => ({
-  type: ActionType.RECEIVE_USERS,
+export const fetchUserRequestActionCreator = () => ({
+  type: ActionType.FETCH_USER_REQUEST,
+});
+
+export const fetchUserSuccessActionCreator = (users) => ({
+  type: ActionType.FETCH_USER_SUCCESS,
   payload: { users },
 });
 
-export const asyncUserRegister = ({ name, email, password }) => {
-  return async (dispatch) => {
-    dispatch(showLoading());
-    try {
-      await api.register({ name, email, password });
-    } catch (error) {
-      alert(error.message);
-    }
-    dispatch(hideLoading());
-  };
-};
+export const fetchUserFailureActionCreator = (error) => ({
+  type: ActionType.FETCH_USER_FAILURE,
+  payload: { error },
+});

@@ -2,7 +2,26 @@ export const ActionType = {
   SET_DARK_MODE: "SET_DARK_MODE",
 };
 
-const getInitialTheme = () => {
+export const setDarkThemeActionCreator = (theme) => {
+  return {
+    type: ActionType.SET_DARK_MODE,
+    payload: {
+      theme,
+    },
+  };
+}
+
+export const asyncSetDarkTheme = (theme) => {
+  if(!theme) {
+    theme = getInitialTheme();
+  }
+  return async (dispatch) => {
+    rawSetTheme(theme);
+    dispatch(setDarkThemeActionCreator(theme));
+  };
+}
+
+export const getInitialTheme = () => {
   if (typeof window !== "undefined" && window.localStorage) {
     const storedPrefs = window.localStorage.getItem("color-theme");
     if (typeof storedPrefs === "string") {
@@ -17,29 +36,7 @@ const getInitialTheme = () => {
   return "light";
 };
 
-export const setInitialDarkMode = () => {
-  const theme = getInitialTheme();
-  rawSetTheme(theme);
-  return {
-    type: ActionType.SET_DARK_MODE,
-    payload: {
-      theme,
-    },
-  };
-};
-
-export const setDarkMode = (theme) => {
-  const usedTheme = theme === "dark" ? "light" : "dark";
-  rawSetTheme(usedTheme);
-  return {
-    type: ActionType.SET_DARK_MODE,
-    payload: {
-      theme: usedTheme,
-    },
-  };
-};
-
-const rawSetTheme = (rawTheme) => {
+export const rawSetTheme = (rawTheme) => {
   const root = window.document.documentElement;
   const isDark = rawTheme === "dark";
 

@@ -4,17 +4,19 @@ import { home } from "@/routes/routeName";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { asyncSetAuthUser } from "@/states/authUser/action";
+import { asyncLoginUser } from "@/states/authUser/action";
 import LoginInput from "@/components/app/LoginInput";
+import { requestState } from "@/utils/requestState";
 
 const Login = () => {
-  const { authUser, loadingBar } = useSelector((state) => state);
+  const  authUser = useSelector((state) => state.authUser.authUser);
+  const loadingState = useSelector((state) => state.authUser.requestState);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const onLogin = ({ email, password }) => {
-    dispatch(asyncSetAuthUser({ email, password }));
+    dispatch(asyncLoginUser({ email, password }));
   };
 
   useEffect(() => {
@@ -24,9 +26,9 @@ const Login = () => {
   });
 
   return (
-    <div className="flex w-full h-screen bg-gradient-to-br from-purple-600 via-purple-500 to-blue-500">
+    <div className="flex w-full h-screen ">
       {/* Left side with logo */}
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8">
+      <div className="hidden lg:flex lg:w-2/3 items-center justify-center p-8 bg-gradient-to-br from-purple-600 via-purple-500 to-blue-500">
         <div className="text-white text-center">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 shadow-2xl">
             <img
@@ -43,7 +45,7 @@ const Login = () => {
       </div>
 
       {/* Right side with form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 md:p-8">
+      <div className="w-full lg:w-1/3 flex items-center justify-center p-4 md:p-8 ">
         <div className="w-full max-w-md">
           <div className="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-2xl">
             <div className="mb-8 text-center">
@@ -60,7 +62,7 @@ const Login = () => {
             </div>
             <LoginInput
               onSubmit={onLogin}
-              isLoading={loadingBar.default !== 0}
+              isLoading={loadingState === requestState.loading}
             />
           </div>
         </div>

@@ -3,14 +3,29 @@ import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import { useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router";
+import { login } from "@/routes/routeName";
+import { useCallback } from "react";
 
 const RegisterInput = ({ handleSubmit, isLoading }) => {
   const [name, onNameChange] = useInput("");
   const [email, onEmailChange] = useInput("");
   const [password, onPasswordChange] = useInput("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleNavigateToLogin = useCallback(() => {
+    navigate(login);
+  }, [navigate]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit({ name, email, password });
+  }
+
   return (
-    <form className="space-y-6">
+    <form onSubmit={onSubmit} className="space-y-6">
       <div className="space-y-4">
         {/* Name Input */}
         <div className="relative">
@@ -85,7 +100,7 @@ const RegisterInput = ({ handleSubmit, isLoading }) => {
 
       <div className="space-y-4">
         <button
-          type="button"
+          type="submit"
           disabled={isLoading}
           className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
           onClick={() => handleSubmit({ name, email, password })}
@@ -103,7 +118,7 @@ const RegisterInput = ({ handleSubmit, isLoading }) => {
 
       <p className="text-center text-gray-600">
         Already have an account?{" "}
-        <span className="text-purple-600 hover:text-purple-700 font-medium cursor-pointer">
+        <span className="text-purple-600 hover:text-purple-700 font-medium cursor-pointer" onClick={handleNavigateToLogin}>
           Sign in
         </span>
       </p>

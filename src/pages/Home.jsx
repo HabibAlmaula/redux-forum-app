@@ -10,14 +10,14 @@ import { Button } from "@/components/ui/button";
 import { asyncPopulateUsersAndThreads } from "@/states/shared/action";
 import ThreadList from "@/components/app/ThreadList";
 import { LoadingThreadList } from "@/components/app/LoadingThread";
+import { requestState as loadingState } from "@/utils/requestState";
+import { toast } from "react-toastify";
 
 export const Home = () => {
-  const {
-    authUser,
-    threads = [],
-    users = [],
-    loadingBar,
-  } = useSelector((state) => state);
+  const authUser = useSelector((state) => state.authUser);
+  const threads = useSelector((state) => state.threads);
+  const users = useSelector((state) => state.users);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,11 +32,45 @@ export const Home = () => {
     console.log(threadId);
   };
 
-  const threadList = threads.map((thread) => ({
+  const testToast = () => {
+    toast.success("Test toast");
+  }
+
+
+  const threadList = threads.threads.map((thread) => ({
     ...thread,
-    user: users.find((user) => user.id === thread.ownerId),
-    authUser: authUser,
+    user: users.users.find((user) => user.id === thread.ownerId),
+    authUser: authUser.authUser.id,
   }));
+
+  const renderThreadList = () => {
+    const state = `${threads.requestState}_${users.requestState}`;
+
+    switch (state) {
+      case `${loadingState.loading}_${loadingState.loading}`:
+      case `${loadingState.loading}_${loadingState.success}`:
+      case `${loadingState.success}_${loadingState.loading}`:
+        return <LoadingThreadList />;
+
+      case `${loadingState.failure}_${loadingState.failure}`:
+      case `${loadingState.failure}_${loadingState.success}`:
+      case `${loadingState.success}_${loadingState.failure}`:
+        return <div>Error loading content</div>;
+
+      case `${loadingState.success}_${loadingState.success}`:
+        return (
+          <ThreadList
+            threads={threadList}
+            upVote={handleUpVote}
+            downVote={handleDownVote}
+          />
+        );
+
+      default:
+        return null;
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Sidebar />
@@ -48,7 +82,7 @@ export const Home = () => {
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
                   <img
-                    src={authUser.avatar}
+                    src={authUser.authUser.avatar}
                     alt="Profile"
                     className="w-10 h-10 rounded-full"
                   />
@@ -79,17 +113,8 @@ export const Home = () => {
               </CardContent>
             </Card>
           )}
-
           <div className="space-y-4">
-            {loadingBar.default === 0 ? (
-              <ThreadList
-                threads={threadList}
-                upVote={handleUpVote}
-                downVote={handleDownVote}
-              />
-            ) : (
-              <LoadingThreadList />
-            )}
+            {renderThreadList()}
           </div>
         </div>
       </main>
