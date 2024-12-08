@@ -2,6 +2,7 @@ import { ThumbsUp, ThumbsDown, MessageSquare } from "lucide-react";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify";
 import moment from "moment";
+import { useNavigate } from "react-router";
 export const ThreadCard = ({
   id,
   title,
@@ -15,12 +16,15 @@ export const ThreadCard = ({
   authUser,
   upVote,
   downVote,
+  showFullBody = false,
 }) => {
   const isThreadLiked = upVotesBy.includes(authUser);
   const isThreadDisliked = downVotesBy.includes(authUser);
+  const navigate = useNavigate();
 
 
-  const handleUpVote = () => {
+  const handleUpVote = (e) => {
+    e.stopPropagation();
     if (isThreadLiked) {
       return;
     }
@@ -28,7 +32,8 @@ export const ThreadCard = ({
     upVote(id);
   };
 
-  const handleDownVote = () => {
+  const handleDownVote = (e) => {
+    e.stopPropagation();
     if (isThreadDisliked) {
       return;
     }
@@ -37,7 +42,7 @@ export const ThreadCard = ({
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 sm:p-6 mb-4">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 sm:p-6 mb-4" onClick={() => navigate(`/detail-thread/${id}`)}>
       <div className="flex gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-3">
@@ -61,26 +66,24 @@ export const ThreadCard = ({
           <h3 className="text-lg font-semibold mb-2 dark:text-white text-start">
             {title}
           </h3>
-          <div className="text-gray-600 dark:text-gray-300 mb-4 text-start line-clamp-4" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}/>
+          <div className={`text-gray-600 dark:text-gray-300 mb-4 text-start ${showFullBody ? '' : 'line-clamp-4'}`} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }} />
 
           <div className="flex items-center gap-4">
             <span className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-full">
               {category}
             </span>
             <div className="flex items-center gap-4">
-              <button className="flex items-center gap-1 text-gray-500">
+              <button className="flex items-center gap-1 text-gray-500" onClick={handleUpVote}>
                 <ThumbsUp
                   size={16}
                   color={isThreadLiked ? "purple" : "currentColor"}
-                  onClick={handleUpVote}
                 />
                 <span>{upVotesBy.length}</span>
               </button>
-              <button className="flex items-center gap-1 text-gray-500">
+              <button className="flex items-center gap-1 text-gray-500" onClick={handleDownVote}>
                 <ThumbsDown
                   size={16}
                   color={isThreadDisliked ? "purple" : "currentColor"}
-                  onClick={handleDownVote}
                 />
                 <span>{downVotesBy.length}</span>
               </button>
@@ -100,7 +103,7 @@ export const ThreadCard = ({
 const userShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  email: PropTypes.string,
   avatar: PropTypes.string.isRequired,
 });
 
@@ -116,6 +119,7 @@ export const threadItemShape = {
   totalComments: PropTypes.number,
   user: userShape.isRequired,
   authUser: PropTypes.string,
+  showFullBody: PropTypes.bool,
 };
 
 ThreadCard.propTypes = {

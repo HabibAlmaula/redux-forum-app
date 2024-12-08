@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { asyncSetDarkTheme } from "@/states/appTheme/action";
 import { useNavigate } from "react-router";
-import { login } from "@/routes/routeName";
+import { home, login } from "@/routes/routeName";
 import {
   Menubar,
   MenubarContent,
@@ -25,8 +25,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useMatch } from "react-router";
 
 const Header = () => {
+  const isVisibleSearchBar = useMatch(home);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
@@ -125,11 +127,11 @@ const Header = () => {
           </span>
         </div>
 
-        <div className="flex-1 max-w-xl mx-4">
+        <div className={`flex-1 max-w-xl mx-4 ${isVisibleSearchBar ? '' : 'hidden'} `}>
           <SearchInput className="hidden md:block" />
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className={`flex items-center gap-4 ${!isVisibleSearchBar ? 'w-full justify-end' : ''}`}>
           <ThemeToggle />
 
           {authUser.authUser ? (
@@ -148,7 +150,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="p-4 md:hidden">
+      <div className={`p-4 md:hidden ${isVisibleSearchBar ? '' : 'hidden'}`}>
         <SearchInput />
       </div>
     </header>
