@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { useInput } from "@/hooks/useInput";
 import { useNavigate } from "react-router";
 import { register } from "@/routes/routeName";
-import { useCallback } from "react";
 
 const LoginInput = ({ onSubmit, isLoading = false }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,10 +12,6 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
   const [password, onPasswordChange] = useInput("");
 
   const navigate = useNavigate();
-
-  const handleNavigateToRegister = useCallback(() => {
-    navigate(register);
-  }, [navigate]);
 
 
   const handleSubmit = (e) => {
@@ -94,7 +89,7 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
         Don&apos;t have an account?{" "}
         <span
           className="text-purple-600 hover:text-purple-700 font-medium cursor-pointer"
-          onClick={handleNavigateToRegister}
+          onClick={() => navigate(register)}
         >
           Sign up
         </span>

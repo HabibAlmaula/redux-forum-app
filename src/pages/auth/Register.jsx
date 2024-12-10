@@ -22,7 +22,7 @@ const Register = () => {
     if (loadingState == requestState.success) {
       navigate(login);
     }
-  }, []);
+  }, [loadingState, navigate]);
 
   return (
     <div className="flex w-full h-screen">
