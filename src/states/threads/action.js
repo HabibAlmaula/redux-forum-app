@@ -12,6 +12,7 @@ export const ActionType = {
   POST_THREAD_REQUEST: "POST_THREAD_REQUEST",
   POST_THREAD_SUCCESS: "POST_THREAD_SUCCESS",
   POST_THREAD_FAILURE: "POST_THREAD_FAILURE",
+  SEARCH_THREADS: "SEARCH_THREADS",
 };
 
 export const fetchThreadsRequestActionCreator = () => {
@@ -101,6 +102,15 @@ const postThreadFailureActionCreator = (error) => {
   };
 }
 
+const searchThreadsActionCreator = (query) => {
+  return {
+    type: ActionType.SEARCH_THREADS,
+    payload: {
+      query,
+    },
+  };
+}
+
 
 export const asyncVoteThreads = (id, voteType, authUser) => {
   console.log("asyncVoteThreads", id, voteType, authUser);
@@ -134,5 +144,12 @@ export const asyncPostThread = (title, body, category) => {
       dispatch(postThreadFailureActionCreator(error.message));
       toast.error("Failed to create thread");
     }
+  };
+};
+
+
+export const searchThreads = (query) => {
+  return async (dispatch) => {
+    dispatch(searchThreadsActionCreator(query));
   };
 };

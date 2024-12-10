@@ -3,6 +3,8 @@ import { ActionType } from "./action";
 
 const initialState = {
   threads: [],
+  filteredThreads: [],
+  query: "",
   requestState: requestState.initial,
   postRequestState: requestState.initial,
   error: null
@@ -121,6 +123,13 @@ export const threadsReducer = (threads = initialState, action) => {
         ...threads,
         postRequestState: requestState.failure,
         error: action.payload.error
+      };
+
+    case ActionType.SEARCH_THREADS:
+      return {
+        ...threads,
+        query: action.payload.query,
+        filteredThreads: threads.threads.filter(thread => thread.title.toLowerCase().includes(action.payload.query.toLowerCase()))
       };
 
     default:

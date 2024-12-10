@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Search, LogOut, Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Moon, Sun, LogOut, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { asyncSetDarkTheme } from "@/states/appTheme/action";
@@ -26,13 +25,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useMatch } from "react-router";
-import PropTypes from "prop-types";
+import { SearchInput } from "./SearchInput";
 
 const Header = () => {
   const isVisibleSearchBar = useMatch(home);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [searchQuery, setSearchQuery] = useState("");
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const authUser = useSelector((state) => state.authUser);
@@ -46,26 +44,6 @@ const Header = () => {
       setIsLoggingOut(false);
     }
   };
-
-  const SearchInput = ({ className = "" }) => (
-    <div className={`relative ${className}`}>
-      <Search
-        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-        size={18}
-      />
-      <Input
-        placeholder="Search discussions..."
-        className="pl-10 bg-gray-50 dark:bg-gray-700 border-none"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-    </div>
-  );
-
-  SearchInput.propTypes = {
-    className: PropTypes.string,
-  }
-
   const ThemeToggle = () => (
     <Button
       variant="ghost"

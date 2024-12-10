@@ -34,7 +34,11 @@ export const Home = () => {
 
 
 
-  const threadList = threads.threads.map((thread) => ({
+  const threadsToMap = threads.filteredThreads.length > 0 || threads.query.trim() !== ""
+    ? threads.filteredThreads
+    : threads.threads;
+
+  const threadList = threadsToMap.map((thread) => ({
     ...thread,
     user: users.users.find((user) => user.id === thread.ownerId),
     authUser: authUser.authUser.id,
@@ -58,9 +62,13 @@ export const Home = () => {
 
       case `${loadingState.success}_${loadingState.success}`:
         return (
-          <ThreadList
-            threads={threadList}
-          />
+          <>
+            {threadList.length > 0 ?
+              <ThreadList threads={threadList} /> :
+              <div className="flex justify-center items-center min-h-[100px]">
+                <p className="text-gray-500">No threads found</p>
+              </div>}
+          </>
         );
 
       default:
