@@ -1,6 +1,6 @@
 import { BaseHome } from "@/components/app/BaseHome";
 import { ThreadCard } from "@/components/app/ThreadCard";
-import { asyncFetchThreadDetail } from "@/states/thread/action";
+import { asyncFetchThreadDetail, asyncVoteThread } from "@/states/thread/action";
 import { requestState } from "@/utils/requestState";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -13,8 +13,8 @@ import { asyncPostComment } from "@/states/comments/action";
 export const DetailTrhead = () => {
   const { id } = useParams();
   const thread = useSelector((state) => state.thread);
-
   const authUser = useSelector((state) => state.authUser);
+  const voteLoadingState = useSelector((state) => state.thread.voteRequestState);
 
   const dispatch = useDispatch();
 
@@ -22,12 +22,8 @@ export const DetailTrhead = () => {
     dispatch(asyncFetchThreadDetail(id));
   }, [dispatch, id]);
 
-  const onUpVote = () => {
-    console.log("Upvoted");
-  };
-
-  const onDownVote = () => {
-    console.log("Downvoted");
+  const handleVote = (threadId, voteType, userId) => {
+    dispatch(asyncVoteThread(threadId, voteType, userId));
   };
 
   const handleCommentSubmit = (content) => {
@@ -51,8 +47,8 @@ export const DetailTrhead = () => {
               {...threadDetail}
               showFullBody={true}
               totalComments={threadDetail.comments.length}
-              downVote={() => onDownVote()}
-              upVote={() => onUpVote()}
+              onVote={handleVote}
+              voteLoadingState={voteLoadingState}
             />
             <CommentInput onSubmit={handleCommentSubmit} />
             <ThreadComments comments={threadDetail.comments} />

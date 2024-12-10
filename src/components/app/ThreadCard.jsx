@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import DOMPurify from "dompurify";
 import moment from "moment";
 import { useNavigate } from "react-router";
+import { requestState } from "@/utils/requestState";
+import { motion, AnimatePresence } from "framer-motion";
+
 export const ThreadCard = ({
   id,
   title,
@@ -14,35 +17,36 @@ export const ThreadCard = ({
   totalComments = 0,
   user,
   authUser,
-  upVote,
-  downVote,
   showFullBody = false,
+  onVote,
+  voteLoadingState,
 }) => {
   const isThreadLiked = upVotesBy.includes(authUser);
   const isThreadDisliked = downVotesBy.includes(authUser);
+  
   const navigate = useNavigate();
 
-
-  const handleUpVote = (e) => {
+  const handleVote = (e, voteType) => {
     e.stopPropagation();
-    if (isThreadLiked) {
+    if (voteLoadingState === requestState.loading) {
       return;
     }
-
-    upVote(id);
-  };
-
-  const handleDownVote = (e) => {
-    e.stopPropagation();
-    if (isThreadDisliked) {
-      return;
+  
+    if (voteType === "up" && isThreadLiked) {
+      onVote(id, "neutral", authUser);
+    } else if (voteType === "down" && isThreadDisliked) {
+      onVote(id, "neutral", authUser);
+    } else {
+      onVote(id, voteType, authUser);
     }
-
-    downVote(id);
   };
+
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 sm:p-6 mb-4" onClick={() => navigate(`/detail-thread/${id}`)}>
+    <div 
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 sm:p-6 mb-4" 
+      onClick={() => navigate(`/detail-thread/${id}`)}
+    >
       <div className="flex gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-3">
@@ -66,27 +70,77 @@ export const ThreadCard = ({
           <h3 className="text-lg font-semibold mb-2 dark:text-white text-start">
             {title}
           </h3>
-          <div className={`text-gray-600 dark:text-gray-300 mb-4 text-start ${showFullBody ? '' : 'line-clamp-4'}`} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }} />
+          <div 
+            className={`text-gray-600 dark:text-gray-300 mb-4 text-start ${showFullBody ? '' : 'line-clamp-4'}`} 
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }} 
+          />
 
           <div className="flex items-center gap-4">
             <span className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-full">
               {category}
             </span>
             <div className="flex items-center gap-4">
-              <button className="flex items-center gap-1 text-gray-500" onClick={handleUpVote}>
-                <ThumbsUp
-                  size={16}
-                  color={isThreadLiked ? "purple" : "currentColor"}
-                />
-                <span>{upVotesBy.length}</span>
-              </button>
-              <button className="flex items-center gap-1 text-gray-500" onClick={handleDownVote}>
-                <ThumbsDown
-                  size={16}
-                  color={isThreadDisliked ? "purple" : "currentColor"}
-                />
-                <span>{downVotesBy.length}</span>
-              </button>
+              <motion.button 
+                className={`flex items-center gap-1 text-gray-500 ${voteLoadingState === requestState.loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                onClick={(e) => handleVote(e, 'up')}
+                whileTap={voteLoadingState !== requestState.loading ? { scale: 0.95 } : {}}
+                disabled={voteLoadingState === requestState.loading}
+              >
+                <motion.div
+                  animate={isThreadLiked ? {
+                    scale: [1, 1.2, 1],
+                  } : {}}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ThumbsUp
+                    size={16}
+                    color={isThreadLiked ? "purple" : "currentColor"}
+                    className={`transition-opacity duration-200 ${voteLoadingState === requestState.loading ? 'opacity-50' : 'opacity-100'}`}
+                  />
+                </motion.div>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={upVotesBy.length}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {upVotesBy.length}
+                  </motion.span>
+                </AnimatePresence>
+              </motion.button>
+
+              <motion.button 
+                className={`flex items-center gap-1 text-gray-500 ${voteLoadingState === requestState.loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                onClick={(e) => handleVote(e, 'down')}
+                whileTap={voteLoadingState !== requestState.loading ? { scale: 0.95 } : {}}
+                disabled={voteLoadingState === requestState.loading}
+              >
+                <motion.div
+                  animate={isThreadDisliked ? {
+                    scale: [1, 1.2, 1],
+                  } : {}}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ThumbsDown
+                    size={16}
+                    color={isThreadDisliked ? "purple" : "currentColor"}
+                    className={`transition-opacity duration-200 ${voteLoadingState === requestState.loading ? 'opacity-50' : 'opacity-100'}`}
+                  />
+                </motion.div>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={downVotesBy.length}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {downVotesBy.length}
+                  </motion.span>
+                </AnimatePresence>
+              </motion.button>
             </div>
             <button className="flex items-center gap-2 text-sm text-gray-500 hover:text-purple-500 transition-colors ml-auto">
               <MessageSquare size={16} />
@@ -113,17 +167,16 @@ export const threadItemShape = {
   body: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  // ownerId: PropTypes.string.isRequired,
   upVotesBy: PropTypes.arrayOf(PropTypes.string),
   downVotesBy: PropTypes.arrayOf(PropTypes.string),
   totalComments: PropTypes.number,
   user: userShape.isRequired,
   authUser: PropTypes.string,
   showFullBody: PropTypes.bool,
+  onVote: PropTypes.func.isRequired,
+  voteLoadingState: PropTypes.string.isRequired,
 };
 
 ThreadCard.propTypes = {
   ...threadItemShape,
-  upVote: PropTypes.func.isRequired,
-  downVote: PropTypes.func.isRequired,
 };

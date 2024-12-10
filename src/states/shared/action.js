@@ -1,22 +1,3 @@
-// import api from "@/utils/api";
-// import { fetchUserFailureActionCreator, fetchUserRequestActionCreator, fetchUserSuccessActionCreator} from "../users/action";
-// import { fetchThreadsFailureActionCreator, fetchThreadsRequestActionCreator, fetchThreadsSuccessActionCreator } from "../threads/action";
-
-// export const asyncPopulateUsersAndThreads = () => async (dispatch) => {
-//   dispatch(fetchUserRequestActionCreator());
-//   dispatch(fetchThreadsRequestActionCreator());
-//   try {
-//     const users = await api.getUsers();
-//     dispatch(fetchUserSuccessActionCreator(users));
-//     const threads = await api.getThreads();
-//     dispatch(fetchThreadsSuccessActionCreator(threads));
-//   } catch (error) {
-//     dispatch(fetchUserFailureActionCreator(error.message));
-//     dispatch(fetchThreadsFailureActionCreator(error.message));
-//   }
-// };
-
-
 import api from "@/utils/api";
 import { 
   fetchUserFailureActionCreator, 

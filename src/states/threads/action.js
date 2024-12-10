@@ -5,8 +5,9 @@ export const ActionType = {
   FETCH_THREADS_SUCCESS: "FETCH_THREADS_SUCCESS",
   FETCH_THREADS_FAILURE: "FETCH_THREADS_FAILURE",
   ADD_THREAD: "ADD_THREAD",
-  THUMB_UP: "THUMB_UP_THREAD",
-  THUMB_DOWN: "THUMB_DOWN_THREAD",
+  POST_VOTE_REQUEST: "POST_VOTE_REQUEST",
+  POST_VOTE_SUCCESS: "POST_VOTE_SUCCESS",
+  POST_VOTE_FAILURE: "POST_VOTE_FAILURE",
 };
 
 export const fetchThreadsRequestActionCreator = () => {
@@ -42,20 +43,52 @@ export const addThreadActionCreator = (thread) => {
   };
 };
 
-export const thumbUpActionCreator = (threadId) => {
+const postVoteRequestActionCreator = (id, voteType, authUser) => {
   return {
-    type: ActionType.THUMB_UP,
+    type: ActionType.POST_VOTE_REQUEST,
     payload: {
-      threadId,
+      id,
+      voteType,
+      authUser,
+    },
+  };
+}
+
+const postVoteSuccessActionCreator = (thread) => {
+  return {
+    type: ActionType.POST_VOTE_SUCCESS,
+    payload: {
+      thread,
     },
   };
 };
 
-export const thumbDownActionCreator = (threadId) => {
+const postVoteFailureActionCreator = (id, error) => {
   return {
-    type: ActionType.THUMB_DOWN,
+    type: ActionType.POST_VOTE_FAILURE,
     payload: {
-      threadId,
+      id,
+      error,
     },
   };
 };
+
+
+export const asyncVoteThreads = (id, voteType, authUser) => {
+  console.log("asyncVoteThreads", id, voteType, authUser);
+  return async (dispatch) => {
+    dispatch(postVoteRequestActionCreator(id, voteType, authUser));
+    try {
+      if (voteType === "up") {
+        await api.upVoteThread(id);
+      } else if (voteType === "down") {
+        await api.downVoteThread(id);
+      } else {
+        await api.neutralizedVoteThread(id);
+      }
+      dispatch(postVoteSuccessActionCreator(thread));
+    } catch (error) {
+      dispatch(postVoteFailureActionCreator(id, error.message));
+    }
+  };
+}

@@ -10,30 +10,34 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CreatePost } from "@/components/app/CreatePost";
+import { asyncVoteThread } from "@/states/thread/action";
+import { asyncVoteThreads } from "@/states/threads/action";
 
 export const Home = () => {
   const authUser = useSelector((state) => state.authUser);
   const threads = useSelector((state) => state.threads);
   const users = useSelector((state) => state.users);
+  const voteLoadingState = useSelector((state) => state.threads.voteLoadingState || loadingState.initial);
 
   const dispatch = useDispatch();
+
+
+  const handleVote = (threadId, voteType, userId) => {
+    dispatch(asyncVoteThreads(threadId, voteType, userId));
+  };
 
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());
   }, [dispatch]);
 
-  const handleUpVote = (threadId) => {
-    console.log(threadId);
-  };
 
-  const handleDownVote = (threadId) => {
-    console.log(threadId);
-  };
 
   const threadList = threads.threads.map((thread) => ({
     ...thread,
     user: users.users.find((user) => user.id === thread.ownerId),
     authUser: authUser.authUser.id,
+    onVote: handleVote,
+    voteLoadingState,
   }));
 
   const renderThreadList = () => {
@@ -54,8 +58,6 @@ export const Home = () => {
         return (
           <ThreadList
             threads={threadList}
-            upVote={handleUpVote}
-            downVote={handleDownVote}
           />
         );
 

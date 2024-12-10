@@ -70,7 +70,7 @@ const Sidebar = () => {
       <div className="flex items-center gap-3 mb-8 cursor-pointer" onClick={() => navigate(home)}>
         <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg"></div>
         <span className="text-xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 text-transparent bg-clip-text">
-          Dicoding
+          Dicoding Forum
         </span>
       </div>
 

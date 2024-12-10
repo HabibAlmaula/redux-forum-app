@@ -35,32 +35,70 @@ export const threadsReducer = (threads = initialState, action) => {
         ...threads,
         threads: threads.threads.concat(action.payload.thread)
       };
-    case ActionType.THUMB_UP:
+    case ActionType.POST_VOTE_REQUEST:
+      console.log(`threads_before => ${JSON.stringify(threads.threads)}`);
+      let tt = {
+        ...threads,
+        threads: threads.threads.map(thread => {
+          let newThread;
+          if (thread.id === action.payload.id) {
+            if (action.payload.voteType === "up") {
+              newThread = {
+                ...thread,
+                upVotesBy: [...thread.upVotesBy, action.payload.authUser],
+                downVotesBy: thread.downVotesBy.filter(id => id !== action.payload.authUser)
+              };
+            } else if (action.payload.voteType === "down") {
+              newThread = {
+                ...thread,
+                upVotesBy: thread.upVotesBy.filter(id => id !== action.payload.authUser),
+                downVotesBy: [...thread.downVotesBy, action.payload.authUser]
+              };
+
+            } else {
+              newThread = {
+                ...thread,
+                upVotesBy: thread.upVotesBy.filter(id => id !== action.payload.authUser),
+                downVotesBy: thread.downVotesBy.filter(id => id !== action.payload.authUser)
+              };
+            }
+            console.log(`newThread => ${JSON.stringify(newThread)}`);
+
+            return newThread;
+          } else {
+            return thread;
+          }
+        })
+      };
+      console.log(`thread_after => ${JSON.stringify(tt.threads)}`);
+      return tt;
+    case ActionType.POST_VOTE_SUCCESS:
       return {
         ...threads,
         threads: threads.threads.map(thread => {
-          if (thread.id === action.payload.threadId) {
-            return {
-              ...thread,
-              thumbs: thread.thumbs + 1
-            };
+          if (thread.id === action.payload.thread.id) {
+            return action.payload.thread;
           }
           return thread;
         })
       };
-    case ActionType.THUMB_DOWN:
+
+    case ActionType.POST_VOTE_FAILURE:
       return {
         ...threads,
         threads: threads.threads.map(thread => {
-          if (thread.id === action.payload.threadId) {
+          if (thread.id === action.payload.id) {
             return {
               ...thread,
-              thumbs: thread.thumbs - 1
+              upVotesBy: thread.upVotesBy.filter(id => id !== action.payload.authUser),
+              downVotesBy: thread.downVotesBy.filter(id => id !== action.payload.authUser)
             };
+          } else {
+            return thread;
           }
-          return thread;
         })
-      };
+      }
+
     default:
       return threads;
 
