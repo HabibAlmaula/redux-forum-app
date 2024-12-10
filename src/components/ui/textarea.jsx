@@ -1,4 +1,5 @@
 import * as React from "react"
+import PropTypes from 'prop-types'
 
 import { cn } from "@/lib/utils"
 
@@ -13,6 +14,32 @@ const Textarea = React.forwardRef(({ className, ...props }, ref) => {
       {...props} />)
   );
 })
+
 Textarea.displayName = "Textarea"
+
+Textarea.propTypes = {
+  className: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  rows: PropTypes.number,
+  cols: PropTypes.number,
+  maxLength: PropTypes.number,
+  minLength: PropTypes.number,
+  wrap: PropTypes.oneOf(['hard', 'soft', 'off']),
+  name: PropTypes.string
+}
 
 export { Textarea }

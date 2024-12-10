@@ -1,4 +1,5 @@
 import * as React from "react"
+import PropTypes from 'prop-types'
 
 import { cn } from "@/lib/utils"
 
@@ -14,6 +15,49 @@ const Input = React.forwardRef(({ className, type, ...props }, ref) => {
       {...props} />)
   );
 })
+
 Input.displayName = "Input"
+
+Input.propTypes = {
+  className: PropTypes.string,
+  type: PropTypes.oneOf([
+    'text',
+    'password',
+    'email',
+    'number',
+    'search',
+    'tel',
+    'url',
+    'date',
+    'time',
+    'datetime-local',
+    'month',
+    'week',
+    'file',
+    'radio',
+    'checkbox',
+    'submit',
+    'reset',
+    'button',
+    'color',
+    'range',
+    'hidden'
+  ]),
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func
+}
+
+Input.defaultProps = {
+  type: 'text'
+}
 
 export { Input }

@@ -10,7 +10,6 @@ import { login } from "@/routes/routeName";
 
 const Register = () => {
   const loadingState = useSelector((state) => state.authUser.requestState);
-  const error = useSelector((state) => state.authUser.error);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

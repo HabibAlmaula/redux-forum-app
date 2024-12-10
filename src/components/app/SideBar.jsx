@@ -1,4 +1,4 @@
-import { Bell, TrendingUp, Trophy } from "lucide-react";
+import { Bell, Trophy } from "lucide-react";
 import { Button } from '@/components/ui/button';
 import { useNavigate, useLocation } from "react-router-dom";
 import { home, leaderboard } from "@/routes/routeName";

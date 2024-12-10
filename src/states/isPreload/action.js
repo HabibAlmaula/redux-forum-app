@@ -1,6 +1,6 @@
 import api from "../../utils/api";
-import { asyncLogoutUser, asyncSetUserLogin, postLoginFailureActionCreator, postLoginSuccessActionCreator } from "../authUser/action";
-import { asyncSetDarkTheme, getInitialTheme, setDarkThemeActionCreator } from "../appTheme/action";
+import { asyncLogoutUser, asyncSetUserLogin } from "../authUser/action";
+import { asyncSetDarkTheme } from "../appTheme/action";
 
 const ActionType = {
   SET_IS_PRELOAD: "SET_IS_PRELOAD",

@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 
-import { hideLoading, showLoading } from "react-redux-loading-bar";
 
 export const ActionType = {
   SET_USER_LOGIN: "SET_USER_LOGIN",

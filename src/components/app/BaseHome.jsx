@@ -1,14 +1,10 @@
 import MobileNavBar from "./MobileNavBar";
 import Sidebar from "./SideBar";
 import Header from "./Header";
-import { useSelector } from "react-redux";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import PropTypes from "prop-types";
+
 
 export const BaseHome = ({ children }) => {
-    const authUser = useSelector((state) => state.authUser);
-
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             <Sidebar />
@@ -22,4 +18,8 @@ export const BaseHome = ({ children }) => {
             <MobileNavBar />
         </div>
     );
+};
+
+BaseHome.propTypes = {
+    children: PropTypes.node.isRequired,
 };
