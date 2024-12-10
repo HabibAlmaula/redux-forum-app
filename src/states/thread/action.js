@@ -1,4 +1,5 @@
 import api from "@/utils/api";
+import { toast } from "react-toastify";
 
 export const ActionType = {
   FETCH_THREAD_DETAIL_REQUEST: "FETCH_THREAD_DETAIL_REQUEST",
@@ -9,6 +10,9 @@ export const ActionType = {
   POST_VOTE_THREAD_REQUEST: "POST_VOTE_THREAD_REQUEST",
   POST_VOTE_THREAD_SUCCESS: "POST_VOTE_THREAD_SUCCESS",
   POST_VOTE_THREAD_FAILURE: "POST_VOTE_THREAD_FAILURE",
+  POST_VOTE_COMMENT_REQUEST: "POST_VOTE_COMMENT_REQUEST",
+  POST_VOTE_COMMENT_SUCCESS: "POST_VOTE_COMMENT_SUCCESS",
+  POST_VOTE_COMMENT_FAILURE: "POST_VOTE_COMMENT_FAILURE",
 };
 
 const fetchThreadDetailRequestActionCreator = (id) => {
@@ -76,6 +80,21 @@ const postVoteFailureActionCreator = (error) => {
   };
 }
 
+
+export const postVoteCommentRequestActionCreator = (threadId, commentId, voteType, authUser) => ({
+  type: ActionType.POST_VOTE_COMMENT_REQUEST,
+  payload: { threadId, commentId, voteType, authUser },
+});
+
+export const postVoteCommentSuccessActionCreator = () => ({
+  type: ActionType.POST_VOTE_COMMENT_SUCCESS,
+});
+
+export const postVoteCommentFailureActionCreator = (error) => ({
+  type: ActionType.POST_VOTE_COMMENT_FAILURE,
+  payload: { error },
+});
+
 export const asyncFetchThreadDetail = (id, withLoading = true) => {
   return async (dispatch) => {
     if (withLoading) {
@@ -111,3 +130,22 @@ export const asyncVoteThread = (id, voteType, authUser) => {
     }
   };
 };
+
+export const asyncVoteComment = (threadId, commentId, voteType, authUser) => {
+  return async (dispatch) => {
+    dispatch(postVoteCommentRequestActionCreator(threadId, commentId, voteType, authUser));
+    try {
+      if (voteType === "up") {
+        await api.upVoteComment(threadId, commentId);
+      } else if (voteType === "down") {
+        await api.downVoteComment(threadId, commentId);
+      } else {
+        await api.neutralizedVoteComment(threadId, commentId);
+      }
+      dispatch(postVoteCommentSuccessActionCreator());
+    } catch (error) {
+      dispatch(postVoteCommentFailureActionCreator(error));
+      toast.error(`Failed to vote comment, ${error.message}`);
+    }
+  };
+}

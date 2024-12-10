@@ -114,7 +114,7 @@ export const asyncVoteThreads = (id, voteType, authUser) => {
       } else {
         await api.neutralizedVoteThread(id);
       }
-      dispatch(postVoteSuccessActionCreator(thread));
+      dispatch(postVoteSuccessActionCreator());
     } catch (error) {
       dispatch(postVoteFailureActionCreator(id, error.message));
     }

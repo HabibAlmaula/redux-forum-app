@@ -1,7 +1,3 @@
-import api from "@/utils/api";
-import { hideLoading } from "react-redux-loading-bar";
-import { showLoading } from "react-redux-loading-bar";
-
 export const ActionType = {
   FETCH_USER_REQUEST: "FETCH_USER_REQUEST",
   FETCH_USER_SUCCESS: "FETCH_USER_SUCCESS",

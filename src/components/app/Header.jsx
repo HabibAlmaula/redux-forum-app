@@ -26,6 +26,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useMatch } from "react-router";
+import PropTypes from "prop-types";
 
 const Header = () => {
   const isVisibleSearchBar = useMatch(home);
@@ -60,6 +61,10 @@ const Header = () => {
       />
     </div>
   );
+
+  SearchInput.propTypes = {
+    className: PropTypes.string,
+  }
 
   const ThemeToggle = () => (
     <Button
@@ -99,7 +104,7 @@ const Header = () => {
         <AlertDialogHeader>
           <AlertDialogTitle>Confirm Logout</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to logout? You'll need to sign in again to
+            Are you sure you want to logout? You&apos;ll need to sign in again to
             access your account.
           </AlertDialogDescription>
         </AlertDialogHeader>

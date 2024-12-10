@@ -36,9 +36,8 @@ export const threadsReducer = (threads = initialState, action) => {
         ...threads,
         threads: threads.threads.concat(action.payload.thread)
       };
-    case ActionType.POST_VOTE_REQUEST:
-      console.log(`threads_before => ${JSON.stringify(threads.threads)}`);
-      let tt = {
+    case ActionType.POST_VOTE_REQUEST: {
+      let thread = {
         ...threads,
         threads: threads.threads.map(thread => {
           let newThread;
@@ -71,8 +70,8 @@ export const threadsReducer = (threads = initialState, action) => {
           }
         })
       };
-      console.log(`thread_after => ${JSON.stringify(tt.threads)}`);
-      return tt;
+      return thread;
+    }
     case ActionType.POST_VOTE_SUCCESS:
       return {
         ...threads,
@@ -107,7 +106,7 @@ export const threadsReducer = (threads = initialState, action) => {
         error: null
       };
 
-    case ActionType.POST_THREAD_SUCCESS:
+    case ActionType.POST_THREAD_SUCCESS: {
       const newThread = {
         ...threads,
         postRequestState: requestState.success,
@@ -116,7 +115,7 @@ export const threadsReducer = (threads = initialState, action) => {
       };
       console.log(`newThread => ${JSON.stringify(newThread)}`);
       return newThread;
-
+    }
     case ActionType.POST_THREAD_FAILURE:
       return {
         ...threads,

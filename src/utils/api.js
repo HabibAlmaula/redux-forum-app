@@ -205,6 +205,53 @@ const api = (() => {
 
   }
 
+
+  async function upVoteComment(threadId, commentId) {
+    const response = await _fetchWithAuth(`/threads/${threadId}/comments/${commentId}/up-vote`, {
+      method: "POST",
+    });
+
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== "success") {
+      throw new Error(message);
+    }
+
+    return responseJson;
+  
+  }
+
+  async function downVoteComment(threadId, commentId) {
+    const response = await _fetchWithAuth(`/threads/${threadId}/comments/${commentId}/down-vote`, {
+      method: "POST",
+    });
+
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== "success") {
+      throw new Error(message);
+    }
+
+    return responseJson;
+  }
+
+  async function neutralizedVoteComment(threadId, commentId) {
+    const response = await _fetchWithAuth(`/threads/${threadId}/comments/${commentId}/neutral-vote`, {
+      method: "POST",
+    });
+
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== "success") {
+      throw new Error(message);
+    }
+
+    return responseJson;
+  }
+
   return {
     getAccessToken,
     putAccessToken,
@@ -219,6 +266,9 @@ const api = (() => {
     downVoteThread,
     neutralizedVoteThread,
     postThread,
+    upVoteComment,
+    downVoteComment,
+    neutralizedVoteComment,
   };
 })();
 

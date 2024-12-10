@@ -6,11 +6,7 @@ import ThreadList from "@/components/app/ThreadList";
 import { LoadingThreadList } from "@/components/app/LoadingThread";
 import { requestState as loadingState, requestState } from "@/utils/requestState";
 import { BaseHome } from "@/components/app/BaseHome";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { CreatePostInput } from "@/components/app/CreatePost";
-import { asyncVoteThread } from "@/states/thread/action";
 import { asyncPostThread, asyncVoteThreads } from "@/states/threads/action";
 
 export const Home = () => {

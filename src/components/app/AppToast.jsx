@@ -1,7 +1,8 @@
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PropTypes from "prop-types";
 
-export const AppToast = ({ theme }) => {
+export const AppToast = ({ theme = 'dark' }) => {
     return (
         <ToastContainer
             position="top-right"
@@ -19,3 +20,6 @@ export const AppToast = ({ theme }) => {
     );
 };
 
+AppToast.propTypes = {
+    theme: PropTypes.oneOf(["dark", "light"]),
+}

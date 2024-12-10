@@ -1,9 +1,28 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
-import { ThumbsUp } from 'lucide-react';
-import { ThumbsDown } from 'lucide-react';
-export const CommentItem = ({ id, avatar, name, createdAt, content }) => {
+import VoteButton from './VoteButton';
+import { requestState } from '@/utils/requestState';
+export const CommentItem = ({ threadId, id, avatar, name, createdAt, content, upVotesBy = [], downVotesBy = [], authUser, voteLoadingState, onVote, }) => {
+
+    const isCommentLiked = upVotesBy.includes(authUser);
+    const isCommentDisliked = downVotesBy.includes(authUser);
+
+    const handleVote = (e, voteType) => {
+        e.stopPropagation();
+        if (voteLoadingState === requestState.loading) {
+            return;
+        }
+
+        if (voteType === "up" && isCommentLiked) {
+            onVote(threadId, id, "neutral", authUser);
+        } else if (voteType === "down" && isCommentDisliked) {
+            onVote(threadId, id, "neutral", authUser);
+        } else {
+            onVote(threadId, id, voteType, authUser);
+        }
+    };
+
     return (
         <div key={id} className="flex flex-col p-4">
             <div className="flex items-center gap-3 mb-3">
@@ -27,16 +46,14 @@ export const CommentItem = ({ id, avatar, name, createdAt, content }) => {
                 }}
             />
             <hr className="my-4" />
-            <div className="flex items-center gap-2 text-gray-400">
-                <button className="flex items-center gap-1">
-                    <ThumbsUp className="w-4 h-4" />
-                    <span>12</span>
-                </button>
-                <button className="flex items-center gap-1">
-                    <ThumbsDown className="w-4 h-4" />
-                    <span>2</span>
-                </button>
-            </div>
+            <VoteButton
+                upVotesBy={upVotesBy}
+                downVotesBy={downVotesBy}
+                isLiked={isCommentLiked}
+                isDisliked={isCommentDisliked}
+                voteLoadingState={voteLoadingState}
+                handleVote={handleVote}
+            />
         </div>
     );
 
@@ -45,12 +62,19 @@ export const CommentItem = ({ id, avatar, name, createdAt, content }) => {
 
 export const commentItemShape = {
     id: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+
     createdAt: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
+    upVotesBy: PropTypes.arrayOf(PropTypes.string),
+    downVotesBy: PropTypes.arrayOf(PropTypes.string),
+    authUser: PropTypes.string,
+    voteLoadingState: PropTypes.string,
+    onVote: PropTypes.func,
 }
 
 CommentItem.propTypes = {
     ...commentItemShape,
+    threadId: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
 }

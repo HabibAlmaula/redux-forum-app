@@ -36,7 +36,7 @@ const threadReducer = (state = initialState, action) => {
         thread: null,
         error: action.payload.error,
       };
-    case ActionType.POST_VOTE_THREAD_REQUEST:
+    case ActionType.POST_VOTE_THREAD_REQUEST: {
       let newThread;
       if (action.payload.voteType === "up") {
         newThread = {
@@ -65,13 +65,14 @@ const threadReducer = (state = initialState, action) => {
         voteRequestState: requestState.loading,
         error: null,
       };
+    }
     case ActionType.POST_VOTE_THREAD_SUCCESS:
       return {
         ...state,
         voteRequestState: requestState.success,
         error: null,
       };
-    case ActionType.POST_VOTE_THREAD_FAILURE:
+    case ActionType.POST_VOTE_THREAD_FAILURE: {
       const oldThread = {
         ...state.thread,
         upvotesBy: state.thread.upvotesBy.filter((id) => id !== action.payload.authUser),
@@ -83,6 +84,78 @@ const threadReducer = (state = initialState, action) => {
         voteRequestState: requestState.failure,
         error: action.payload.error,
       };
+    }
+    case ActionType.POST_VOTE_COMMENT_REQUEST: {
+      const newComments = state.thread.comments.map(comment => {
+        let newComment;
+        if (comment.id === action.payload.commentId) {
+          if (action.payload.voteType === "up") {
+            newComment = {
+              ...comment,
+              upVotesBy: [...comment.upVotesBy, action.payload.authUser],
+              downVotesBy: comment.downVotesBy.filter(id => id !== action.payload.authUser)
+            };
+          } else if (action.payload.voteType === "down") {
+            newComment = {
+              ...comment,
+              upVotesBy: comment.upVotesBy.filter(id => id !== action.payload.authUser),
+              downVotesBy: [...comment.downVotesBy, action.payload.authUser]
+            };
+          } else {
+            newComment = {
+              ...comment,
+              upVotesBy: comment.upVotesBy.filter(id => id !== action.payload.authUser),
+              downVotesBy: comment.downVotesBy.filter(id => id !== action.payload.authUser)
+            };
+          }
+          return newComment;
+        } else {
+          return comment;
+        }
+      });
+      console.log(`newComments => ${JSON.stringify(newComments)}`);
+      return {
+        ...state,
+        thread: {
+          ...state.thread,
+          comments: newComments,
+        },
+        voteRequestState: requestState.loading,
+        error: null,
+      };
+    }
+
+    case ActionType.POST_VOTE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        voteRequestState: requestState.success,
+        error: null,
+      };
+
+    case ActionType.POST_VOTE_COMMENT_FAILURE: {
+      const oldComments = state.thread.comments.map(comment => {
+        let newComment;
+        if (comment.id === action.payload.id) {
+          newComment = {
+            ...comment,
+            upVotesBy: comment.upVotesBy.filter(id => id !== action.payload.authUser),
+            downVotesBy: comment.downVotesBy.filter(id => id !== action.payload.authUser),
+          };
+          return newComment;
+        } else {
+          return comment;
+        }
+      });
+      return {
+        ...state,
+        thread: {
+          ...state.thread,
+          comments: oldComments,
+        },
+        voteRequestState: requestState.failure,
+        error: action.payload.error,
+      };
+    }
     default:
       return state;
   }

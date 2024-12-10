@@ -1,10 +1,10 @@
-import { ThumbsUp, ThumbsDown, MessageSquare } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify";
 import moment from "moment";
 import { useNavigate } from "react-router";
 import { requestState } from "@/utils/requestState";
-import { motion, AnimatePresence } from "framer-motion";
+import VoteButton from "./VoteButton";
 
 export const ThreadCard = ({
   id,
@@ -23,7 +23,7 @@ export const ThreadCard = ({
 }) => {
   const isThreadLiked = upVotesBy.includes(authUser);
   const isThreadDisliked = downVotesBy.includes(authUser);
-  
+
   const navigate = useNavigate();
 
   const handleVote = (e, voteType) => {
@@ -31,7 +31,7 @@ export const ThreadCard = ({
     if (voteLoadingState === requestState.loading) {
       return;
     }
-  
+
     if (voteType === "up" && isThreadLiked) {
       onVote(id, "neutral", authUser);
     } else if (voteType === "down" && isThreadDisliked) {
@@ -43,8 +43,8 @@ export const ThreadCard = ({
 
 
   return (
-    <div 
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 sm:p-6 mb-4" 
+    <div
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 sm:p-6 mb-4"
       onClick={() => navigate(`/detail-thread/${id}`)}
     >
       <div className="flex gap-4">
@@ -70,16 +70,16 @@ export const ThreadCard = ({
           <h3 className="text-lg font-semibold mb-2 dark:text-white text-start">
             {title}
           </h3>
-          <div 
-            className={`text-gray-600 dark:text-gray-300 mb-4 text-start ${showFullBody ? '' : 'line-clamp-4'}`} 
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }} 
+          <div
+            className={`text-gray-600 dark:text-gray-300 mb-4 text-start ${showFullBody ? '' : 'line-clamp-4'}`}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}
           />
 
           <div className="flex items-center gap-4">
             <span className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-full">
               {category}
             </span>
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <motion.button 
                 className={`flex items-center gap-1 text-gray-500 ${voteLoadingState === requestState.loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 onClick={(e) => handleVote(e, 'up')}
@@ -141,7 +141,16 @@ export const ThreadCard = ({
                   </motion.span>
                 </AnimatePresence>
               </motion.button>
-            </div>
+            </div> */}
+
+            <VoteButton
+              upVotesBy={upVotesBy}
+              downVotesBy={downVotesBy}
+              isLiked={isThreadLiked}
+              isDisliked={isThreadDisliked}
+              voteLoadingState={voteLoadingState}
+              handleVote={handleVote}
+            />
             <button className="flex items-center gap-2 text-sm text-gray-500 hover:text-purple-500 transition-colors ml-auto">
               <MessageSquare size={16} />
               <span className="hidden sm:inline">{totalComments} comments</span>
