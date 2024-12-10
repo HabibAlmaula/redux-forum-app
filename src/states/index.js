@@ -6,6 +6,7 @@ import { threadsReducer } from "./threads/reducer";
 import { usersReducer } from "./users/reducer";
 import threadReducer from "./thread/reducer";
 import { commentsReducer } from "./comments/reducer";
+import { leaderBoardReducer } from "./leaderBoard/reducer";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     threads: threadsReducer,
     thread: threadReducer,
     users: usersReducer,
-    comment: commentsReducer
+    comment: commentsReducer,
+    leaderBoard: leaderBoardReducer,
   },
 });

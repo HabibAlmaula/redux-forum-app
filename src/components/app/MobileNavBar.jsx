@@ -1,4 +1,5 @@
-import { User, Bell, Home, Hash } from "lucide-react";
+import { Trophy } from "lucide-react";
+import { User, Bell, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const MobileNavBar = () => {
@@ -7,7 +8,7 @@ const MobileNavBar = () => {
 
   const navItems = [
     { icon: Home, label: "Home", path: "/" },
-    { icon: Hash, label: "Topics", path: "/topics" },
+    { icon: Trophy, label: "LeaderBoard", path: "/leaderBoard" },
     { icon: Bell, label: "Alerts", path: "/alerts" },
     { icon: User, label: "Profile", path: "/profile" },
   ];

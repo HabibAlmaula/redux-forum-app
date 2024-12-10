@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Preload } from "./components/app/Preload";
 import { Home } from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
-import { detailThread, home, login, register } from "./routes/routeName";
+import { detailThread, home, leaderboard, login, register } from "./routes/routeName";
 import { AuthGuard } from "./routes/authGuard";
 import { RouteGuard } from "./routes/RouteGuard";
 import Login from "./pages/auth/Login";
@@ -13,6 +13,7 @@ import Register from "./pages/auth/Register";
 import NotFound from "./pages/base/NotFound";
 import { AppToast } from "./components/app/AppToast";
 import { DetailTrhead } from "./pages/DetailThread";
+import Leaderboard from "./pages/LeaderBoard";
 
 const ForumApp = () => {
   const isPreload = useSelector((state) => state.isPreload);
@@ -43,6 +44,8 @@ const ForumApp = () => {
             {/* Add other protected routes here */}
             <Route path={home} element={<Home />} />
             <Route path={detailThread} element={<DetailTrhead />} />
+            <Route path={leaderboard} element={<Leaderboard/>} />
+
           </Route>
 
           {/* 404 Route */}

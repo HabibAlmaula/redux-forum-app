@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { ThreadComments } from "@/components/app/ThreadComments";
 import CommentInput from "@/components/app/CommentInput";
 import { asyncPostComment } from "@/states/comments/action";
+import { LoadingThreadList } from "@/components/app/LoadingThread";
 
 export const DetailTrhead = () => {
   const { id } = useParams();
@@ -33,7 +34,7 @@ export const DetailTrhead = () => {
   const renderThreadDetail = () => {
     switch (thread.requestState) {
       case requestState.loading:
-        return <div>Loading...</div>;
+        return <LoadingThreadList />;
       case requestState.success: {
         const threadDetail = {
           ...thread.thread,

@@ -252,6 +252,20 @@ const api = (() => {
     return responseJson;
   }
 
+
+  async function getLeaderBoards(){
+    const response = await _fetchWithAuth(`/leaderboards`);
+    const responseJson = await response.json();
+    if (responseJson.status !== "success") {
+      throw new Error(responseJson.message);
+    }
+    const {
+      data: { leaderboards },
+    } = responseJson;
+
+    return leaderboards;
+  }
+
   return {
     getAccessToken,
     putAccessToken,
@@ -269,6 +283,7 @@ const api = (() => {
     upVoteComment,
     downVoteComment,
     neutralizedVoteComment,
+    getLeaderBoards,
   };
 })();
 
