@@ -38,7 +38,7 @@ const RegisterInput = ({ handleSubmit, isLoading }) => {
               name="name"
               value={name}
               onChange={onNameChange}
-              className="w-full px-4 py-3 pl-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-4 py-3 pl-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-black"
               placeholder="Enter your full name"
               required
               disabled={isLoading}
@@ -58,7 +58,7 @@ const RegisterInput = ({ handleSubmit, isLoading }) => {
               name="email"
               value={email}
               onChange={onEmailChange}
-              className="w-full px-4 py-3 pl-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-4 py-3 pl-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-black"
               placeholder="Enter your email"
               required
               disabled={isLoading}
@@ -78,7 +78,7 @@ const RegisterInput = ({ handleSubmit, isLoading }) => {
               name="password"
               value={password}
               onChange={onPasswordChange}
-              className="w-full px-4 py-3 pl-12 pr-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+              className="w-full px-4 py-3 pl-12 pr-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-black"
               placeholder="Create a password"
               required
             />
