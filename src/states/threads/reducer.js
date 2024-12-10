@@ -4,6 +4,7 @@ import { ActionType } from "./action";
 const initialState = {
   threads: [],
   requestState: requestState.initial,
+  postRequestState: requestState.initial,
   error: null
 };
 
@@ -98,6 +99,30 @@ export const threadsReducer = (threads = initialState, action) => {
           }
         })
       }
+
+    case ActionType.POST_THREAD_REQUEST:
+      return {
+        ...threads,
+        postRequestState: requestState.loading,
+        error: null
+      };
+
+    case ActionType.POST_THREAD_SUCCESS:
+      const newThread = {
+        ...threads,
+        postRequestState: requestState.success,
+        threads: [action.payload.thread, ...threads.threads],
+        error: null
+      };
+      console.log(`newThread => ${JSON.stringify(newThread)}`);
+      return newThread;
+
+    case ActionType.POST_THREAD_FAILURE:
+      return {
+        ...threads,
+        postRequestState: requestState.failure,
+        error: action.payload.error
+      };
 
     default:
       return threads;

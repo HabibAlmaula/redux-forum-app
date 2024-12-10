@@ -1,4 +1,5 @@
 import api from "@/utils/api";
+import { toast } from "react-toastify";
 
 export const ActionType = {
   FETCH_THREADS_REQUEST: "FETCH_THREADS_REQUEST",
@@ -8,6 +9,9 @@ export const ActionType = {
   POST_VOTE_REQUEST: "POST_VOTE_REQUEST",
   POST_VOTE_SUCCESS: "POST_VOTE_SUCCESS",
   POST_VOTE_FAILURE: "POST_VOTE_FAILURE",
+  POST_THREAD_REQUEST: "POST_THREAD_REQUEST",
+  POST_THREAD_SUCCESS: "POST_THREAD_SUCCESS",
+  POST_THREAD_FAILURE: "POST_THREAD_FAILURE",
 };
 
 export const fetchThreadsRequestActionCreator = () => {
@@ -73,6 +77,30 @@ const postVoteFailureActionCreator = (id, error) => {
   };
 };
 
+const postThreadRequestActionCreator = () => {
+  return {
+    type: ActionType.POST_THREAD_REQUEST,
+  };
+};
+
+const postThreadSuccessActionCreator = (thread) => {
+  return {
+    type: ActionType.POST_THREAD_SUCCESS,
+    payload: {
+      thread,
+    },
+  };
+};
+
+const postThreadFailureActionCreator = (error) => {
+  return {
+    type: ActionType.POST_THREAD_FAILURE,
+    payload: {
+      error,
+    },
+  };
+}
+
 
 export const asyncVoteThreads = (id, voteType, authUser) => {
   console.log("asyncVoteThreads", id, voteType, authUser);
@@ -92,3 +120,19 @@ export const asyncVoteThreads = (id, voteType, authUser) => {
     }
   };
 }
+
+
+
+export const asyncPostThread = (title, body, category) => {
+  return async (dispatch) => {
+    dispatch(postThreadRequestActionCreator());
+    try {
+      const thread = await api.postThread(title, body, category);
+      dispatch(postThreadSuccessActionCreator(thread));
+      toast.success("Thread created successfully");
+    } catch (error) {
+      dispatch(postThreadFailureActionCreator(error.message));
+      toast.error("Failed to create thread");
+    }
+  };
+};

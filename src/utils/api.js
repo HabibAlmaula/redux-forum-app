@@ -181,6 +181,30 @@ const api = (() => {
     return responseJson;
   }
 
+  async function postThread(title, body, category) {
+    const response = await _fetchWithAuth(`/threads`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, body, category }),
+    });
+
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== "success") {
+      throw new Error(message);
+    }
+
+    const {
+      data: { thread }
+    } = responseJson;
+
+    return thread;
+
+  }
+
   return {
     getAccessToken,
     putAccessToken,
@@ -194,6 +218,7 @@ const api = (() => {
     upVoteThread,
     downVoteThread,
     neutralizedVoteThread,
+    postThread,
   };
 })();
 

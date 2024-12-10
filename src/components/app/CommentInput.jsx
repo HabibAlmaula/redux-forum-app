@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useSelector } from "react-redux";
 import { requestState } from "@/utils/requestState";
+import { useInput } from "@/hooks/useInput";
 
 const CommentInput = ({ onSubmit }) => {
-  const [comment, setComment] = useState("");
+  const [comment, onChange, setComment] = useInput("");
   const loadingState = useSelector((state) => state.comment.requestState);
 
   const handleSubmit = (e) => {
@@ -25,7 +26,7 @@ const CommentInput = ({ onSubmit }) => {
           <Textarea
             placeholder="Write a comment..."
             value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            onChange={onChange}
             className="w-full min-h-[100px] resize-none"
             disabled={loadingState === requestState.loading}
           />

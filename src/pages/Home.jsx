@@ -4,20 +4,21 @@ import { useEffect } from "react";
 import { asyncPopulateUsersAndThreads } from "@/states/shared/action";
 import ThreadList from "@/components/app/ThreadList";
 import { LoadingThreadList } from "@/components/app/LoadingThread";
-import { requestState as loadingState } from "@/utils/requestState";
+import { requestState as loadingState, requestState } from "@/utils/requestState";
 import { BaseHome } from "@/components/app/BaseHome";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CreatePost } from "@/components/app/CreatePost";
+import { CreatePostInput } from "@/components/app/CreatePost";
 import { asyncVoteThread } from "@/states/thread/action";
-import { asyncVoteThreads } from "@/states/threads/action";
+import { asyncPostThread, asyncVoteThreads } from "@/states/threads/action";
 
 export const Home = () => {
   const authUser = useSelector((state) => state.authUser);
   const threads = useSelector((state) => state.threads);
   const users = useSelector((state) => state.users);
   const voteLoadingState = useSelector((state) => state.threads.voteLoadingState || loadingState.initial);
+  const postLoadingState = useSelector((state) => state.threads.postLoadingState || loadingState.initial);
 
   const dispatch = useDispatch();
 
@@ -29,6 +30,11 @@ export const Home = () => {
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());
   }, [dispatch]);
+
+
+  const handlePostThread = (title, body, category) => {
+    dispatch(asyncPostThread(title, body, category));
+  }
 
 
 
@@ -69,7 +75,7 @@ export const Home = () => {
   return (
     <BaseHome>
       {authUser != null && (
-        <CreatePost />
+        <CreatePostInput authUser={authUser} isLoading={postLoadingState == requestState.loading} handlePostSubmit={handlePostThread} />
       )}
       <div className="space-y-4">
         {renderThreadList()}
