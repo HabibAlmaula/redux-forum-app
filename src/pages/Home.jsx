@@ -1,13 +1,13 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { asyncPopulateUsersAndThreads } from "@/states/shared/action";
-import ThreadList from "@/components/app/ThreadList";
-import { LoadingThreadList } from "@/components/app/LoadingThread";
-import { requestState as loadingState, requestState } from "@/utils/requestState";
-import { BaseHome } from "@/components/app/BaseHome";
-import { CreatePostInput } from "@/components/app/CreatePost";
-import { asyncPostThread, asyncVoteThreads } from "@/states/threads/action";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { asyncPopulateUsersAndThreads } from '@/states/shared/action';
+import ThreadList from '@/components/app/ThreadList';
+import { LoadingThreadList } from '@/components/app/LoadingThread';
+import { requestState as loadingState, requestState } from '@/utils/requestState';
+import { BaseHome } from '@/components/app/BaseHome';
+import { CreatePostInput } from '@/components/app/CreatePost';
+import { asyncPostThread, asyncVoteThreads } from '@/states/threads/action';
 
 export const Home = () => {
   const authUser = useSelector((state) => state.authUser);
@@ -30,11 +30,11 @@ export const Home = () => {
 
   const handlePostThread = (title, body, category) => {
     dispatch(asyncPostThread(title, body, category));
-  }
+  };
 
 
 
-  const threadsToMap = threads.filteredThreads.length > 0 || threads.query.trim() !== ""
+  const threadsToMap = threads.filteredThreads.length > 0 || threads.query.trim() !== ''
     ? threads.filteredThreads
     : threads.threads;
 
@@ -50,31 +50,31 @@ export const Home = () => {
     const state = `${threads.requestState}_${users.requestState}`;
 
     switch (state) {
-      case `${loadingState.loading}_${loadingState.loading}`:
-      case `${loadingState.loading}_${loadingState.success}`:
-      case `${loadingState.success}_${loadingState.loading}`:
-        return <LoadingThreadList />;
+    case `${loadingState.loading}_${loadingState.loading}`:
+    case `${loadingState.loading}_${loadingState.success}`:
+    case `${loadingState.success}_${loadingState.loading}`:
+      return <LoadingThreadList />;
 
-      case `${loadingState.failure}_${loadingState.failure}`:
-      case `${loadingState.failure}_${loadingState.success}`:
-      case `${loadingState.success}_${loadingState.failure}`:
-        return <div>Error loading content</div>;
+    case `${loadingState.failure}_${loadingState.failure}`:
+    case `${loadingState.failure}_${loadingState.success}`:
+    case `${loadingState.success}_${loadingState.failure}`:
+      return <div>Error loading content</div>;
 
-      case `${loadingState.success}_${loadingState.success}`:
-        return (
-          <>
-            {threadList.length > 0 ?
-              <ThreadList threads={threadList} /> :
-              <div className="flex justify-center items-center min-h-[100px]">
-                <p className="text-gray-500">No threads found</p>
-              </div>}
-          </>
-        );
+    case `${loadingState.success}_${loadingState.success}`:
+      return (
+        <>
+          {threadList.length > 0 ?
+            <ThreadList threads={threadList} /> :
+            <div className="flex justify-center items-center min-h-[100px]">
+              <p className="text-gray-500">No threads found</p>
+            </div>}
+        </>
+      );
 
-      default:
-        return null;
+    default:
+      return null;
     }
-  }
+  };
 
   return (
     <BaseHome>

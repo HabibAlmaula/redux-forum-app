@@ -1,5 +1,5 @@
-import { PropTypes } from "prop-types";
-import { ThreadCard, threadItemShape } from "./ThreadCard";
+import { PropTypes } from 'prop-types';
+import { ThreadCard, threadItemShape } from './ThreadCard';
 const ThreadList = ({ threads }) => {
   return (
     <div className="thread-list mt-10 md:mt-0">

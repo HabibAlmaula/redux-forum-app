@@ -1,8 +1,8 @@
-import { Bell, Trophy } from "lucide-react";
+import { Bell, Trophy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate, useLocation } from "react-router-dom";
-import { home, leaderboard } from "@/routes/routeName";
-import { Home } from "lucide-react";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { home, leaderboard } from '@/routes/routeName';
+import { Home } from 'lucide-react';
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -23,22 +23,22 @@ const Sidebar = () => {
 
       <div className="space-y-2">
         <Button
-          variant={isActive(home) ? "default" : "ghost"}
+          variant={isActive(home) ? 'default' : 'ghost'}
           className={`w-full justify-start gap-3 ${isActive(home)
-              ? "bg-slate-200 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-50 dark:hover:bg-slate-700"
-              : "hover:bg-slate-100 dark:hover:bg-slate-800"
-            }`}
+            ? 'bg-slate-200 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-50 dark:hover:bg-slate-700'
+            : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+          }`}
           onClick={() => navigate(home)}
         >
           <Home size={18} />
           Trending
         </Button>
         <Button
-         variant={isActive(leaderboard) ? "default" : "ghost"}
-         className={`w-full justify-start gap-3 ${isActive(leaderboard)
-          ? "bg-slate-200 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-50 dark:hover:bg-slate-700"
-          : "hover:bg-slate-100 dark:hover:bg-slate-800"
-        }`}
+          variant={isActive(leaderboard) ? 'default' : 'ghost'}
+          className={`w-full justify-start gap-3 ${isActive(leaderboard)
+            ? 'bg-slate-200 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-50 dark:hover:bg-slate-700'
+            : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+          }`}
           onClick={() => navigate(leaderboard)}
         >
           <Trophy size={18} />
@@ -47,7 +47,7 @@ const Sidebar = () => {
         <Button
           variant="ghost"
           className="w-full justify-start gap-3"
-          onClick={() => navigate("/notifications")}
+          onClick={() => navigate('/notifications')}
         >
           <Bell size={18} />
           Notifications

@@ -1,20 +1,20 @@
-import PropTypes from "prop-types";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { useSelector } from "react-redux";
-import { requestState } from "@/utils/requestState";
-import { useInput } from "@/hooks/useInput";
+import PropTypes from 'prop-types';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { useSelector } from 'react-redux';
+import { requestState } from '@/utils/requestState';
+import { useInput } from '@/hooks/useInput';
 
 const CommentInput = ({ onSubmit }) => {
-  const [comment, onChange, setComment] = useInput("");
+  const [comment, onChange, setComment] = useInput('');
   const loadingState = useSelector((state) => state.comment.requestState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (comment.trim()) {
       onSubmit(comment);
-      setComment("");
+      setComment('');
     }
   };
 
@@ -35,8 +35,8 @@ const CommentInput = ({ onSubmit }) => {
               disabled={!comment.trim() || loadingState == requestState.loading}
             >
               {loadingState === requestState.loading
-                ? "Posting..."
-                : "Post Comment"}
+                ? 'Posting...'
+                : 'Post Comment'}
             </Button>
           </div>
         </form>

@@ -1,18 +1,18 @@
-import api from "@/utils/api";
-import { toast } from "react-toastify";
+import api from '@/utils/api';
+import { toast } from 'react-toastify';
 
 export const ActionType = {
-  FETCH_THREAD_DETAIL_REQUEST: "FETCH_THREAD_DETAIL_REQUEST",
+  FETCH_THREAD_DETAIL_REQUEST: 'FETCH_THREAD_DETAIL_REQUEST',
   FETCH_THREAD_DETAIL_REQUEST_NO_LOADING:
-    "FETCH_THREAD_DETAIL_REQUEST_NO_LOADING",
-  FETCH_THREAD_DETAIL_SUCCESS: "FETCH_THREAD_DETAIL_SUCCESS",
-  FETCH_THREAD_DETAIL_FAILURE: "FETCH_THREAD_DETAIL_FAILURE",
-  POST_VOTE_THREAD_REQUEST: "POST_VOTE_THREAD_REQUEST",
-  POST_VOTE_THREAD_SUCCESS: "POST_VOTE_THREAD_SUCCESS",
-  POST_VOTE_THREAD_FAILURE: "POST_VOTE_THREAD_FAILURE",
-  POST_VOTE_COMMENT_REQUEST: "POST_VOTE_COMMENT_REQUEST",
-  POST_VOTE_COMMENT_SUCCESS: "POST_VOTE_COMMENT_SUCCESS",
-  POST_VOTE_COMMENT_FAILURE: "POST_VOTE_COMMENT_FAILURE",
+    'FETCH_THREAD_DETAIL_REQUEST_NO_LOADING',
+  FETCH_THREAD_DETAIL_SUCCESS: 'FETCH_THREAD_DETAIL_SUCCESS',
+  FETCH_THREAD_DETAIL_FAILURE: 'FETCH_THREAD_DETAIL_FAILURE',
+  POST_VOTE_THREAD_REQUEST: 'POST_VOTE_THREAD_REQUEST',
+  POST_VOTE_THREAD_SUCCESS: 'POST_VOTE_THREAD_SUCCESS',
+  POST_VOTE_THREAD_FAILURE: 'POST_VOTE_THREAD_FAILURE',
+  POST_VOTE_COMMENT_REQUEST: 'POST_VOTE_COMMENT_REQUEST',
+  POST_VOTE_COMMENT_SUCCESS: 'POST_VOTE_COMMENT_SUCCESS',
+  POST_VOTE_COMMENT_FAILURE: 'POST_VOTE_COMMENT_FAILURE',
 };
 
 const fetchThreadDetailRequestActionCreator = (id) => {
@@ -60,7 +60,7 @@ const postVoteRequestActionCreator = (id, voteType, authUser) => {
       authUser,
     },
   };
-}
+};
 
 const postVoteSuccessActionCreator = (thread) => {
   return {
@@ -69,7 +69,7 @@ const postVoteSuccessActionCreator = (thread) => {
       thread,
     },
   };
-}
+};
 
 const postVoteFailureActionCreator = (error) => {
   return {
@@ -78,7 +78,7 @@ const postVoteFailureActionCreator = (error) => {
       error,
     },
   };
-}
+};
 
 
 export const postVoteCommentRequestActionCreator = (threadId, commentId, voteType, authUser) => ({
@@ -112,14 +112,14 @@ export const asyncFetchThreadDetail = (id, withLoading = true) => {
 };
 
 export const asyncVoteThread = (id, voteType, authUser) => {
-  console.log("asyncVoteThread", id, voteType, authUser);
+  console.log('asyncVoteThread', id, voteType, authUser);
   return async (dispatch) => {
     dispatch(postVoteRequestActionCreator(id, voteType, authUser));
     try {
       let thread;
-      if (voteType === "up") {
+      if (voteType === 'up') {
         thread = await api.upVoteThread(id);
-      } else if (voteType === "down") {
+      } else if (voteType === 'down') {
         thread = await api.downVoteThread(id);
       } else {
         thread = await api.neutralizedVoteThread(id);
@@ -135,9 +135,9 @@ export const asyncVoteComment = (threadId, commentId, voteType, authUser) => {
   return async (dispatch) => {
     dispatch(postVoteCommentRequestActionCreator(threadId, commentId, voteType, authUser));
     try {
-      if (voteType === "up") {
+      if (voteType === 'up') {
         await api.upVoteComment(threadId, commentId);
-      } else if (voteType === "down") {
+      } else if (voteType === 'down') {
         await api.downVoteComment(threadId, commentId);
       } else {
         await api.neutralizedVoteComment(threadId, commentId);
@@ -148,4 +148,4 @@ export const asyncVoteComment = (threadId, commentId, voteType, authUser) => {
       toast.error(`Failed to vote comment, ${error.message}`);
     }
   };
-}
+};

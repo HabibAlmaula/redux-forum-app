@@ -1,16 +1,16 @@
-import { Trophy } from "lucide-react";
-import { User, Bell, Home } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Trophy } from 'lucide-react';
+import { User, Bell, Home } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const MobileNavBar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
   const navItems = [
-    { icon: Home, label: "Home", path: "/" },
-    { icon: Trophy, label: "LeaderBoard", path: "/leaderBoard" },
-    { icon: Bell, label: "Alerts", path: "/alerts" },
-    { icon: User, label: "Profile", path: "/profile" },
+    { icon: Home, label: 'Home', path: '/' },
+    { icon: Trophy, label: 'LeaderBoard', path: '/leaderBoard' },
+    { icon: Bell, label: 'Alerts', path: '/alerts' },
+    { icon: User, label: 'Profile', path: '/profile' },
   ];
 
   return (
@@ -19,7 +19,7 @@ const MobileNavBar = () => {
         {navItems.map(({ icon: Icon, label, path }) => {
           const isActive =
             currentPath === path ||
-            (path !== "/" && currentPath.startsWith(path));
+            (path !== '/' && currentPath.startsWith(path));
           return (
             <Link
               key={label}
@@ -30,15 +30,15 @@ const MobileNavBar = () => {
                 size={20}
                 className={`${
                   isActive
-                    ? "text-blue-500 dark:text-blue-400"
-                    : "text-gray-500 dark:text-gray-400"
+                    ? 'text-blue-500 dark:text-blue-400'
+                    : 'text-gray-500 dark:text-gray-400'
                 }`}
               />
               <span
                 className={`text-xs ${
                   isActive
-                    ? "text-blue-500 dark:text-blue-400 font-medium"
-                    : "text-gray-500 dark:text-gray-400"
+                    ? 'text-blue-500 dark:text-blue-400 font-medium'
+                    : 'text-gray-500 dark:text-gray-400'
                 }`}
               >
                 {label}

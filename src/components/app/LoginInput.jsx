@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-import LoadingSpinner from "./LoadingSpinner";
-import PropTypes from "prop-types";
-import { useInput } from "@/hooks/useInput";
-import { useNavigate } from "react-router";
-import { register } from "@/routes/routeName";
+import { useState } from 'react';
+import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import LoadingSpinner from './LoadingSpinner';
+import PropTypes from 'prop-types';
+import { useInput } from '@/hooks/useInput';
+import { useNavigate } from 'react-router';
+import { register } from '@/routes/routeName';
 
 const LoginInput = ({ onSubmit, isLoading = false }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, onEmailChange] = useInput("");
-  const [password, onPasswordChange] = useInput("");
+  const [email, onEmailChange] = useInput('');
+  const [password, onPasswordChange] = useInput('');
 
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ email, password });
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -46,7 +46,7 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
           </label>
           <div className="relative">
             <input
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               className="w-full px-4 py-3 pl-12 pr-12 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-black"
               placeholder="Enter your password"
               value={password}
@@ -81,12 +81,12 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
             Signing in...
           </span>
         ) : (
-          "Sign In"
+          'Sign In'
         )}
       </button>
 
       <p className="text-center text-gray-600 mt-4">
-        Don&apos;t have an account?{" "}
+        Don&apos;t have an account?{' '}
         <span
           className="text-purple-600 hover:text-purple-700 font-medium cursor-pointer"
           onClick={() => navigate(register)}

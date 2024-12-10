@@ -1,16 +1,16 @@
-import { useInput } from "@/hooks/useInput";
-import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
-import { useState } from "react";
-import LoadingSpinner from "./LoadingSpinner";
-import PropTypes from "prop-types";
-import { useNavigate } from "react-router";
-import { login } from "@/routes/routeName";
-import { useCallback } from "react";
+import { useInput } from '@/hooks/useInput';
+import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import { useState } from 'react';
+import LoadingSpinner from './LoadingSpinner';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router';
+import { login } from '@/routes/routeName';
+import { useCallback } from 'react';
 
 const RegisterInput = ({ handleSubmit, isLoading }) => {
-  const [name, onNameChange] = useInput("");
-  const [email, onEmailChange] = useInput("");
-  const [password, onPasswordChange] = useInput("");
+  const [name, onNameChange] = useInput('');
+  const [email, onEmailChange] = useInput('');
+  const [password, onPasswordChange] = useInput('');
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const RegisterInput = ({ handleSubmit, isLoading }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     handleSubmit({ name, email, password });
-  }
+  };
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
@@ -74,7 +74,7 @@ const RegisterInput = ({ handleSubmit, isLoading }) => {
           </label>
           <div className="relative">
             <input
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               name="password"
               value={password}
               onChange={onPasswordChange}
@@ -111,13 +111,13 @@ const RegisterInput = ({ handleSubmit, isLoading }) => {
               Creating account...
             </span>
           ) : (
-            "Create Account"
+            'Create Account'
           )}
         </button>
       </div>
 
       <p className="text-center text-gray-600">
-        Already have an account?{" "}
+        Already have an account?{' '}
         <span className="text-purple-600 hover:text-purple-700 font-medium cursor-pointer" onClick={handleNavigateToLogin}>
           Sign in
         </span>

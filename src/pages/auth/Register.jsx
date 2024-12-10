@@ -1,12 +1,12 @@
-import DicodingLogo from "../../assets/img/dicoding_logo.png";
-import RegisterInput from "@/components/app/RegisterInput";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { asyncUserRegister } from "@/states/authUser/action";
-import { requestState } from "@/utils/requestState";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import { login } from "@/routes/routeName";
+import DicodingLogo from '../../assets/img/dicoding_logo.png';
+import RegisterInput from '@/components/app/RegisterInput';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { asyncUserRegister } from '@/states/authUser/action';
+import { requestState } from '@/utils/requestState';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { login } from '@/routes/routeName';
 
 const Register = () => {
   const loadingState = useSelector((state) => state.authUser.requestState);

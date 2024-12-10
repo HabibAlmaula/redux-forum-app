@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-const LoadingSpinner = ({ className = "h-5 w-5", fill = "currentColor" }) => {
+import PropTypes from 'prop-types';
+const LoadingSpinner = ({ className = 'h-5 w-5', fill = 'currentColor' }) => {
   return (
     <svg
       className={`animate-spin ${className}`}

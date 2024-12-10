@@ -1,12 +1,12 @@
-import DicodingLogo from "../../assets/img/dicoding_logo.png";
-import { useNavigate } from "react-router";
-import { home } from "@/routes/routeName";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { asyncLoginUser } from "@/states/authUser/action";
-import LoginInput from "@/components/app/LoginInput";
-import { requestState } from "@/utils/requestState";
+import DicodingLogo from '../../assets/img/dicoding_logo.png';
+import { useNavigate } from 'react-router';
+import { home } from '@/routes/routeName';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { asyncLoginUser } from '@/states/authUser/action';
+import LoginInput from '@/components/app/LoginInput';
+import { requestState } from '@/utils/requestState';
 
 const Login = () => {
   const  authUser = useSelector((state) => state.authUser.authUser);

@@ -1,19 +1,19 @@
-import { useSelector } from "react-redux";
-import { asyncPreloadProcess } from "./states/isPreload/action";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { Preload } from "./components/app/Preload";
-import { Home } from "./pages/Home";
-import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
-import { detailThread, home, leaderboard, login, register } from "./routes/routeName";
-import { AuthGuard } from "./routes/authGuard";
-import { RouteGuard } from "./routes/RouteGuard";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import NotFound from "./pages/base/NotFound";
-import { AppToast } from "./components/app/AppToast";
-import { DetailTrhead } from "./pages/DetailThread";
-import Leaderboard from "./pages/LeaderBoard";
+import { useSelector } from 'react-redux';
+import { asyncPreloadProcess } from './states/isPreload/action';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { Preload } from './components/app/Preload';
+import { Home } from './pages/Home';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { detailThread, home, leaderboard, login, register } from './routes/routeName';
+import { AuthGuard } from './routes/authGuard';
+import { RouteGuard } from './routes/RouteGuard';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import NotFound from './pages/base/NotFound';
+import { AppToast } from './components/app/AppToast';
+import { DetailTrhead } from './pages/DetailThread';
+import Leaderboard from './pages/LeaderBoard';
 
 const ForumApp = () => {
   const isPreload = useSelector((state) => state.isPreload);

@@ -1,18 +1,18 @@
-import { Button } from "@/components/ui/button";
-import { Moon, Sun, LogOut, Loader2 } from "lucide-react";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { asyncSetDarkTheme } from "@/states/appTheme/action";
-import { useNavigate } from "react-router";
-import { home, login } from "@/routes/routeName";
+import { Button } from '@/components/ui/button';
+import { Moon, Sun, LogOut, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { asyncSetDarkTheme } from '@/states/appTheme/action';
+import { useNavigate } from 'react-router';
+import { home, login } from '@/routes/routeName';
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "@/components/ui/menubar";
-import { asyncLogoutUser } from "@/states/authUser/action";
+} from '@/components/ui/menubar';
+import { asyncLogoutUser } from '@/states/authUser/action';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,9 +23,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { useMatch } from "react-router";
-import { SearchInput } from "./SearchInput";
+} from '@/components/ui/alert-dialog';
+import { useMatch } from 'react-router';
+import { SearchInput } from './SearchInput';
 
 const Header = () => {
   const isVisibleSearchBar = useMatch(home);
@@ -35,7 +35,7 @@ const Header = () => {
 
   const authUser = useSelector((state) => state.authUser);
   const appTheme = useSelector((state) => state.appTheme);
-  
+
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
@@ -50,9 +50,9 @@ const Header = () => {
       size="icon"
       onClick={() => dispatch(asyncSetDarkTheme(appTheme))}
       className="rounded-full"
-      aria-label={`Switch to ${appTheme === "dark" ? "light" : "dark"} mode`}
+      aria-label={`Switch to ${appTheme === 'dark' ? 'light' : 'dark'} mode`}
     >
-      {appTheme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+      {appTheme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
     </Button>
   );
 
@@ -94,7 +94,7 @@ const Header = () => {
             className="gap-2"
           >
             {isLoggingOut && <Loader2 size={16} className="animate-spin" />}
-            {isLoggingOut ? "Logging out..." : "Logout"}
+            {isLoggingOut ? 'Logging out...' : 'Logout'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

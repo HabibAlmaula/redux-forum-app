@@ -1,10 +1,10 @@
-import { MessageSquare } from "lucide-react";
-import PropTypes from "prop-types";
-import DOMPurify from "dompurify";
-import moment from "moment";
-import { useNavigate } from "react-router";
-import { requestState } from "@/utils/requestState";
-import VoteButton from "./VoteButton";
+import { MessageSquare } from 'lucide-react';
+import PropTypes from 'prop-types';
+import DOMPurify from 'dompurify';
+import moment from 'moment';
+import { useNavigate } from 'react-router';
+import { requestState } from '@/utils/requestState';
+import VoteButton from './VoteButton';
 
 export const ThreadCard = ({
   id,
@@ -32,10 +32,10 @@ export const ThreadCard = ({
       return;
     }
 
-    if (voteType === "up" && isThreadLiked) {
-      onVote(id, "neutral", authUser);
-    } else if (voteType === "down" && isThreadDisliked) {
-      onVote(id, "neutral", authUser);
+    if (voteType === 'up' && isThreadLiked) {
+      onVote(id, 'neutral', authUser);
+    } else if (voteType === 'down' && isThreadDisliked) {
+      onVote(id, 'neutral', authUser);
     } else {
       onVote(id, voteType, authUser);
     }
@@ -79,70 +79,6 @@ export const ThreadCard = ({
             <span className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-full">
               {category}
             </span>
-            {/* <div className="flex items-center gap-4">
-              <motion.button 
-                className={`flex items-center gap-1 text-gray-500 ${voteLoadingState === requestState.loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                onClick={(e) => handleVote(e, 'up')}
-                whileTap={voteLoadingState !== requestState.loading ? { scale: 0.95 } : {}}
-                disabled={voteLoadingState === requestState.loading}
-              >
-                <motion.div
-                  animate={isThreadLiked ? {
-                    scale: [1, 1.2, 1],
-                  } : {}}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ThumbsUp
-                    size={16}
-                    color={isThreadLiked ? "purple" : "currentColor"}
-                    className={`transition-opacity duration-200 ${voteLoadingState === requestState.loading ? 'opacity-50' : 'opacity-100'}`}
-                  />
-                </motion.div>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={upVotesBy.length}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {upVotesBy.length}
-                  </motion.span>
-                </AnimatePresence>
-              </motion.button>
-
-              <motion.button 
-                className={`flex items-center gap-1 text-gray-500 ${voteLoadingState === requestState.loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                onClick={(e) => handleVote(e, 'down')}
-                whileTap={voteLoadingState !== requestState.loading ? { scale: 0.95 } : {}}
-                disabled={voteLoadingState === requestState.loading}
-              >
-                <motion.div
-                  animate={isThreadDisliked ? {
-                    scale: [1, 1.2, 1],
-                  } : {}}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ThumbsDown
-                    size={16}
-                    color={isThreadDisliked ? "purple" : "currentColor"}
-                    className={`transition-opacity duration-200 ${voteLoadingState === requestState.loading ? 'opacity-50' : 'opacity-100'}`}
-                  />
-                </motion.div>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={downVotesBy.length}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {downVotesBy.length}
-                  </motion.span>
-                </AnimatePresence>
-              </motion.button>
-            </div> */}
-
             <VoteButton
               upVotesBy={upVotesBy}
               downVotesBy={downVotesBy}
