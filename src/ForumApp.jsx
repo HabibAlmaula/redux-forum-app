@@ -6,7 +6,7 @@ import { Preload } from './components/app/Preload';
 import { Home } from './pages/Home';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { detailThread, home, leaderboard, login, register } from './routes/routeName';
-import { AuthGuard } from './routes/authGuard';
+import { AuthGuard } from './routes/AuthGuard';
 import { RouteGuard } from './routes/RouteGuard';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
