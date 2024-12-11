@@ -1,4 +1,4 @@
-import NotFoundIcon from "../../assets/not-found.svg";
+import NotFoundIcon from '../../assets/not-found.svg';
 
 function NotFound() {
   return (

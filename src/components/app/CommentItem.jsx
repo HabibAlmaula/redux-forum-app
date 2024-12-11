@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 import VoteButton from './VoteButton';
 import { requestState } from '@/utils/requestState';
-export const CommentItem = ({ threadId, id, avatar, name, createdAt, content, upVotesBy = [], downVotesBy = [], authUser, voteLoadingState, onVote, }) => {
 
+export const CommentItem = ({ threadId, id, avatar, name, createdAt, content, upVotesBy = [], downVotesBy = [], authUser, voteLoadingState, onVote, }) => {
   const isCommentLiked = upVotesBy.includes(authUser);
   const isCommentDisliked = downVotesBy.includes(authUser);
 
