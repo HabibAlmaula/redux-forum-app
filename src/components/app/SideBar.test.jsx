@@ -1,6 +1,6 @@
 /**
  * Test Scenarios
- * 
+ *
  * - Sidebar Component
  *   - should render all navigation buttons correctly
  *   - should render logo and title correctly
@@ -39,7 +39,7 @@ describe('Sidebar Component', () => {
   const renderSidebar = (pathname = '/') => {
     // Update the mock pathname
     mockPathname = pathname;
-    
+
     return render(
       <MemoryRouter initialEntries={[pathname]}>
         <Sidebar />

@@ -108,7 +108,7 @@ export const NoVotes = {
 // Interactive example
 export const Interactive = () => {
   const users = Array.from({ length: 5 }, (_, i) => `user${i + 1}`);
-  
+
   return (
     <div className="space-y-4">
       <div>
@@ -119,7 +119,7 @@ export const Interactive = () => {
           handleVote={(e, type) => alert(`Voted ${type}`)}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Liked State</h3>
         <VoteButton
@@ -129,7 +129,7 @@ export const Interactive = () => {
           handleVote={(e, type) => alert(`Voted ${type}`)}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Disliked State</h3>
         <VoteButton
@@ -139,7 +139,7 @@ export const Interactive = () => {
           handleVote={(e, type) => alert(`Voted ${type}`)}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Loading State</h3>
         <VoteButton

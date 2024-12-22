@@ -4,7 +4,7 @@ import { ActionType } from './action';
 
 /**
  * Test Scenarios
- * 
+ *
  * - appThemeReducer
  *   - should return the initial state when given undefined state
  *   - should return current state for unknown action

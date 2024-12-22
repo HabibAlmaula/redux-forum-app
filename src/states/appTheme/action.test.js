@@ -1,18 +1,18 @@
 /**
  * Test Scenarios
- * 
+ *
  * - Theme Action Creator
  *   - should create set dark theme action correctly
- * 
+ *
  * - asyncSetDarkTheme thunk
  *   - should dispatch action correctly with provided theme
  *   - should dispatch action correctly with initial theme when no theme provided
- * 
+ *
  * - getInitialTheme helper
  *   - should get theme from localStorage when available
  *   - should get theme from system preferences when localStorage empty
  *   - should return default light theme when no preference found
- * 
+ *
  * - rawSetTheme helper
  *   - should set dark theme correctly on document
  *   - should set light theme correctly on document
@@ -40,7 +40,7 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 // Mock matchMedia
-window.matchMedia = vi.fn().mockImplementation(query => ({
+window.matchMedia = vi.fn().mockImplementation((query) => ({
   matches: false,
   media: query,
   addEventListener: vi.fn(),
@@ -69,10 +69,10 @@ describe('Theme Features', () => {
         type: ActionType.SET_DARK_MODE,
         payload: { theme }
       };
-      
+
       // Act
       const action = setDarkThemeActionCreator(theme);
-      
+
       // Assert
       expect(action).toEqual(expectedAction);
     });
@@ -83,10 +83,10 @@ describe('Theme Features', () => {
       // Arrange
       const theme = 'dark';
       const dispatch = vi.fn();
-      
+
       // Act
       await asyncSetDarkTheme(theme)(dispatch);
-      
+
       // Assert
       expect(dispatch).toHaveBeenCalledWith(setDarkThemeActionCreator(theme));
     });
@@ -95,10 +95,10 @@ describe('Theme Features', () => {
       // Arrange
       const dispatch = vi.fn();
       localStorageMock.getItem.mockReturnValue('light');
-      
+
       // Act
       await asyncSetDarkTheme()(dispatch);
-      
+
       // Assert
       expect(dispatch).toHaveBeenCalledWith(setDarkThemeActionCreator('light'));
     });
@@ -108,10 +108,10 @@ describe('Theme Features', () => {
     it('should get theme from localStorage when available', () => {
       // Arrange
       localStorageMock.getItem.mockReturnValue('dark');
-      
+
       // Act
       const result = getInitialTheme();
-      
+
       // Assert
       expect(result).toBe('dark');
       expect(localStorageMock.getItem).toHaveBeenCalledWith('color-theme');
@@ -120,14 +120,14 @@ describe('Theme Features', () => {
     it('should get theme from system preferences when localStorage empty', () => {
       // Arrange
       localStorageMock.getItem.mockReturnValue(null);
-      window.matchMedia = vi.fn().mockImplementation(query => ({
+      window.matchMedia = vi.fn().mockImplementation((query) => ({
         matches: true,
         media: query
       }));
-      
+
       // Act
       const result = getInitialTheme();
-      
+
       // Assert
       expect(result).toBe('dark');
       expect(window.matchMedia).toHaveBeenCalledWith('(prefers-color-scheme: dark)');
@@ -136,14 +136,14 @@ describe('Theme Features', () => {
     it('should return default light theme when no preference found', () => {
       // Arrange
       localStorageMock.getItem.mockReturnValue(null);
-      window.matchMedia = vi.fn().mockImplementation(query => ({
+      window.matchMedia = vi.fn().mockImplementation((query) => ({
         matches: false,
         media: query
       }));
-      
+
       // Act
       const result = getInitialTheme();
-      
+
       // Assert
       expect(result).toBe('light');
     });
@@ -154,10 +154,10 @@ describe('Theme Features', () => {
       // Arrange
       const theme = 'dark';
       const mockClassList = document.documentElement.classList;
-      
+
       // Act
       rawSetTheme(theme);
-      
+
       // Assert
       expect(mockClassList.remove).toHaveBeenCalledWith('light');
       expect(mockClassList.add).toHaveBeenCalledWith('dark');
@@ -169,10 +169,10 @@ describe('Theme Features', () => {
       // Arrange
       const theme = 'light';
       const mockClassList = document.documentElement.classList;
-      
+
       // Act
       rawSetTheme(theme);
-      
+
       // Assert
       expect(mockClassList.remove).toHaveBeenCalledWith('dark');
       expect(mockClassList.add).toHaveBeenCalledWith('light');
