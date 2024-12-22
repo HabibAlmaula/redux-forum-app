@@ -92,15 +92,15 @@ export const DarkMode = {
     ...Default.args,
   },
   decorators: [
-    (Story) => 
-      React.createElement('div', 
-        { 
+    (Story) =>
+      React.createElement('div',
+        {
           className: 'dark p-4 bg-gray-900',
-        }, 
-        React.createElement('div', 
-          { 
+        },
+        React.createElement('div',
+          {
             className: 'max-w-2xl w-full',
-          }, 
+          },
           React.createElement(Story)
         )
       )

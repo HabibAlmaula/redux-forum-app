@@ -1,13 +1,15 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-// https://vite.dev/config/
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173, // Make sure this matches the port Cypress is trying to access
-    host: true   // This allows external connections
+    port: 5173,
+    host: true
   },
   resolve: {
     alias: {

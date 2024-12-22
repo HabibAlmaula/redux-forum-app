@@ -1,6 +1,6 @@
 /**
  * Test Scenarios
- * 
+ *
  * - MobileNavBar Component
  *   - should render all navigation items correctly
  *   - should highlight home link when on home page
@@ -33,7 +33,7 @@ describe('MobileNavBar Component', () => {
   const renderMobileNavBar = (pathname = '/') => {
     // Update the mock pathname
     mockPathname = pathname;
-    
+
     return render(
       <MemoryRouter initialEntries={[pathname]}>
         <MobileNavBar />
