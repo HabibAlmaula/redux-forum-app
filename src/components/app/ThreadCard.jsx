@@ -2,7 +2,6 @@ import { MessageSquare } from 'lucide-react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 import moment from 'moment';
-import { useNavigate } from 'react-router';
 import { requestState } from '@/utils/requestState';
 import VoteButton from './VoteButton';
 
@@ -20,11 +19,11 @@ export const ThreadCard = ({
   showFullBody = false,
   onVote,
   voteLoadingState,
+  onClick,
 }) => {
   const isThreadLiked = upVotesBy.includes(authUser);
   const isThreadDisliked = downVotesBy.includes(authUser);
 
-  const navigate = useNavigate();
 
   const handleVote = (e, voteType) => {
     e.stopPropagation();
@@ -45,7 +44,7 @@ export const ThreadCard = ({
   return (
     <div
       className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 sm:p-6 mb-4"
-      onClick={() => navigate(`/detail-thread/${id}`)}
+      onClick={onClick}
     >
       <div className="flex gap-4">
         <div className="flex-1">
@@ -120,6 +119,7 @@ export const threadItemShape = {
   showFullBody: PropTypes.bool,
   onVote: PropTypes.func.isRequired,
   voteLoadingState: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 };
 
 ThreadCard.propTypes = {
