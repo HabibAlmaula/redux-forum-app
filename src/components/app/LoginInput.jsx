@@ -73,6 +73,7 @@ const LoginInput = ({ onSubmit, isLoading = false }) => {
         type="submit"
         onClick={() => onSubmit({ email, password })}
         disabled={isLoading}
+        data-testid="submit-login-button"
         className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {isLoading ? (
