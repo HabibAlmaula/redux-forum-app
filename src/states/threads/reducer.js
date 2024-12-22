@@ -132,6 +132,13 @@ export const threadsReducer = (threads = initialState, action) => {
       filteredThreads: threads.threads.filter((thread) => thread.title.toLowerCase().includes(action.payload.query.toLowerCase()))
     };
 
+  case ActionType.FILTER_CATEGORY_THREAD:
+    return {
+      ...threads,
+      query: action.payload.category,
+      filteredThreads: threads.threads.filter((thread) => thread.category.toLowerCase() === action.payload.category.toLowerCase())
+    };
+
   default:
     return threads;
 

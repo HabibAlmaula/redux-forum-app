@@ -13,6 +13,7 @@ export const ActionType = {
   POST_THREAD_SUCCESS: 'POST_THREAD_SUCCESS',
   POST_THREAD_FAILURE: 'POST_THREAD_FAILURE',
   SEARCH_THREADS: 'SEARCH_THREADS',
+  FILTER_CATEGORY_THREAD: 'FILTER_CATEGORY_THREAD',
 };
 
 export const fetchThreadsRequestActionCreator = () => {
@@ -111,6 +112,15 @@ const searchThreadsActionCreator = (query) => {
   };
 };
 
+const filterCategoryThreadActionCreator = (category) => {
+  return {
+    type: ActionType.FILTER_CATEGORY_THREAD,
+    payload: {
+      category,
+    },
+  };
+};
+
 
 export const asyncVoteThreads = (id, voteType, authUser) => {
   console.log('asyncVoteThreads', id, voteType, authUser);
@@ -151,5 +161,11 @@ export const asyncPostThread = (title, body, category) => {
 export const searchThreads = (query) => {
   return async (dispatch) => {
     dispatch(searchThreadsActionCreator(query));
+  };
+};
+
+export const filterCategoryThread = (category) => {
+  return async (dispatch) => {
+    dispatch(filterCategoryThreadActionCreator(category));
   };
 };
